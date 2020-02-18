@@ -2,11 +2,12 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "inspector.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
-class Rendering;
+class Inspector;
 }
 QT_END_NAMESPACE
 
@@ -19,9 +20,11 @@ public:
     ~MainWindow();
 
 private slots:
+    void OnSaveClicked();
+    void OnOpenClicked();
 
 private:
     Ui::MainWindow *uiMainWindow = nullptr;
-    Ui::Rendering *uiRendering = nullptr;
+    Ui::Inspector *uiInspector = nullptr;
 };
 #endif // MAINWINDOW_H

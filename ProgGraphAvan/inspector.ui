@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Inspector</class>
+ <widget class="QWidget" name="Inspector">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>184</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="label_translation">
+       <property name="text">
+        <string>Translation</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QDoubleSpinBox" name="spinBox_TranslationX"/>
+     </item>
+     <item>
+      <widget class="QDoubleSpinBox" name="spinBox_TranslationY"/>
+     </item>
+     <item>
+      <widget class="QDoubleSpinBox" name="spinBox_TranslationZ"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label_rotation">
+       <property name="text">
+        <string>Rotation</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QDoubleSpinBox" name="spinBox_RotationX"/>
+     </item>
+     <item>
+      <widget class="QDoubleSpinBox" name="spinBox_RotationY"/>
+     </item>
+     <item>
+      <widget class="QDoubleSpinBox" name="spinBox_RotationZ"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QLabel" name="label_scale">
+       <property name="text">
+        <string>Scale</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QDoubleSpinBox" name="spinBox_ScaleX"/>
+     </item>
+     <item>
+      <widget class="QDoubleSpinBox" name="spinBox_ScaleY"/>
+     </item>
+     <item>
+      <widget class="QDoubleSpinBox" name="spinBox_ScaleZ"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
