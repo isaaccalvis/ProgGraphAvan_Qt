@@ -1,23 +1,23 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "ui_inspector.h"
+#include "hierarchy.h"
+#include "inspector.h"
 #include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , uiMainWindow(new Ui::MainWindow)
-    , uiInspector(new Ui::Inspector)
-    //, uiRendering(new Ui::Rendering)
 {
     qDebug("Creating Window\n");
     uiMainWindow->setupUi(this);
 
-    // Create rendering widget
+    // Hierarchy
+    hierarchy = new Hierarchy();
+    uiMainWindow->DockWindowHierarchy->setWidget(hierarchy);
 
-    // Add Inspector
-    QWidget* inspectorWidget = new QWidget();
-    uiInspector->setupUi(inspectorWidget);
-    uiMainWindow->DockWindowInspector->setWidget(inspectorWidget);
+    // Inspector
+    inspector = new Inspector();
+    uiMainWindow->DockWindowInspector->setWidget(inspector);
 
     uiMainWindow->menuView->addAction(uiMainWindow->DockWindowProject->toggleViewAction());
     uiMainWindow->menuView->addAction(uiMainWindow->DockWindowHierarchy->toggleViewAction());
@@ -27,13 +27,13 @@ MainWindow::MainWindow(QWidget *parent)
     connect(uiMainWindow->actionSave, SIGNAL(triggered()), this, SLOT(OnSaveClicked()));
     connect(uiMainWindow->actionOpen, SIGNAL(triggered()), this, SLOT(OnOpenClicked()));
 
+    connect(hierarchy, SIGNAL(entitySelected(int)), inspector, SLOT(OnEntityChanged(int)));
+
 }
 
 MainWindow::~MainWindow()
 {
     delete uiMainWindow;
-    delete uiInspector;
-    //delete uiRendering;
 }
 
 void MainWindow::OnSaveClicked()

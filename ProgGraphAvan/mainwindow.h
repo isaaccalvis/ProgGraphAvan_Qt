@@ -2,13 +2,15 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "inspector.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
-class Inspector;
 }
+
+class Hierarchy;
+class Inspector;
+
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
@@ -25,6 +27,8 @@ private slots:
 
 private:
     Ui::MainWindow *uiMainWindow = nullptr;
-    Ui::Inspector *uiInspector = nullptr;
+
+    Hierarchy* hierarchy = nullptr;
+    Inspector* inspector = nullptr;
 };
 #endif // MAINWINDOW_H
