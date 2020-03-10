@@ -10,6 +10,7 @@ class MainWindow;
 
 class Hierarchy;
 class Inspector;
+class SceneWidget;
 
 QT_END_NAMESPACE
 
@@ -30,5 +31,6 @@ private:
 
     Hierarchy* hierarchy = nullptr;
     Inspector* inspector = nullptr;
+    SceneWidget* scene = nullptr;
 };
 #endif // MAINWINDOW_H

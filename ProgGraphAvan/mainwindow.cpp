@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "hierarchy.h"
 #include "inspector.h"
+#include "scenewidget.h"
 #include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -18,6 +19,12 @@ MainWindow::MainWindow(QWidget *parent)
     // Inspector
     inspector = new Inspector();
     uiMainWindow->DockWindowInspector->setWidget(inspector);
+
+    // Scene
+    scene = new SceneWidget();
+    QBoxLayout* centralLayout = new QVBoxLayout;
+    centralLayout->addWidget(scene);
+    uiMainWindow->centralwidget->setLayout(centralLayout);
 
     uiMainWindow->menuView->addAction(uiMainWindow->DockWindowProject->toggleViewAction());
     uiMainWindow->menuView->addAction(uiMainWindow->DockWindowHierarchy->toggleViewAction());

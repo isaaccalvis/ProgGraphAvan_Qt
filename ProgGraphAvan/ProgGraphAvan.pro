@@ -19,12 +19,14 @@ SOURCES += \
     hierarchy.cpp \
     inspector.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    scenewidget.cpp
 
 HEADERS += \
     hierarchy.h \
     inspector.h \
-    mainwindow.h
+    mainwindow.h \
+    scenewidget.h
 
 FORMS += \
     Transform.ui \
