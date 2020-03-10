@@ -6,6 +6,11 @@ SceneWidget::SceneWidget(QWidget* parent) : QWidget(parent)
     setAutoFillBackground(true);
 }
 
+SceneWidget::~SceneWidget()
+{
+    // TODO: Clean GameObjects list
+}
+
 QSize SceneWidget::sizeHint() const
 {
     return QSize(256,256);
@@ -14,6 +19,24 @@ QSize SceneWidget::sizeHint() const
 QSize SceneWidget::minimumSizeHint() const
 {
     return QSize(64,64);
+}
+
+GameObject* SceneWidget::CreateGameObject()
+{
+    GameObject* newGO = new GameObject();
+    gameObjects.push_back(newGO);
+    return newGO;
+}
+
+void SceneWidget::DeleteGameObject(GameObject* go)
+{
+    for (std::list<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); it++)
+    {
+        if ((*it) == go)
+        {
+            gameObjects.erase(it);
+        }
+    }
 }
 
 void SceneWidget::paintEvent(QPaintEvent* event)
