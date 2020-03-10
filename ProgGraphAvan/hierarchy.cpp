@@ -28,7 +28,7 @@ void Hierarchy::OnRemoveEntityClick()
 {
     int current = ui->listWidget->currentRow();
     ui->listWidget->takeItem(current);
-    emit entityDestroy(selectedId);
+    emit entityDestroy(current);
     maxId--;
 }
 

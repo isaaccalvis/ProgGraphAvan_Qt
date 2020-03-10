@@ -16,7 +16,7 @@ public:
     QSize minimumSizeHint() const override;
 
 public slots:
-    GameObject* CreateGameObject(int num);
+    void CreateGameObject(int num);
     void DeleteGameObject(int num);
 
 private:

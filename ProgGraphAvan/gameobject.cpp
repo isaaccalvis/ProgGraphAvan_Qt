@@ -7,7 +7,7 @@ GameObject::GameObject()
 
 GameObject::GameObject(int num)
 {
-
+    this->num = num;
 }
 
 int GameObject::GetId() const
