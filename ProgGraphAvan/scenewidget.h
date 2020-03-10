@@ -15,8 +15,9 @@ public:
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
 
-    GameObject* CreateGameObject();
-    void DeleteGameObject(GameObject* go);
+public slots:
+    GameObject* CreateGameObject(int num);
+    void DeleteGameObject(int num);
 
 private:
     void paintEvent(QPaintEvent* event) override;

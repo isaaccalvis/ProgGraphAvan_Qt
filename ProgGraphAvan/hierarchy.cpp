@@ -20,16 +20,21 @@ Hierarchy::~Hierarchy()
 void Hierarchy::OnAddEntityClick()
 {
     ui->listWidget->addItem("Entity");
+    emit entityCreated(maxId);
+    maxId++;
 }
 
 void Hierarchy::OnRemoveEntityClick()
 {
     int current = ui->listWidget->currentRow();
     ui->listWidget->takeItem(current);
+    emit entityDestroy(selectedId);
+    maxId--;
 }
 
 void Hierarchy::OnListElementClicked(int currentRow)
 {
-    int entityId = currentRow;
-    emit entitySelected(entityId);
+    selectedId = currentRow;
+    qInfo("%i", selectedId);
+    emit entitySelected(selectedId);
 }

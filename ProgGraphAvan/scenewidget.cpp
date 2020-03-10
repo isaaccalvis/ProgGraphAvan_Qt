@@ -21,19 +21,22 @@ QSize SceneWidget::minimumSizeHint() const
     return QSize(64,64);
 }
 
-GameObject* SceneWidget::CreateGameObject()
+GameObject* SceneWidget::CreateGameObject(int num)
 {
-    GameObject* newGO = new GameObject();
+    qDebug("Create new");
+    GameObject* newGO = new GameObject(num);
     gameObjects.push_back(newGO);
     return newGO;
 }
 
-void SceneWidget::DeleteGameObject(GameObject* go)
+void SceneWidget::DeleteGameObject(int num)
 {
+    qDebug("Delete old");
     for (std::list<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); it++)
     {
-        if ((*it) == go)
+        if ((*it)->GetId() == num)
         {
+            // TODO: Peta a l'eliminar l'ultim game object
             gameObjects.erase(it);
         }
     }

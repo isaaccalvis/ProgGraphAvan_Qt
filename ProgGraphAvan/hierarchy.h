@@ -16,7 +16,9 @@ public:
     ~Hierarchy();
 
 signals:
+    void entityCreated(int entityId);
     void entitySelected(int entityId);
+    void entityDestroy(int entityId);
 
 public slots:
     void OnAddEntityClick();
@@ -25,6 +27,8 @@ public slots:
 
 private:
     Ui::Hierarchy *ui;
+    int selectedId = -1;
+    unsigned int maxId = 0;
 };
 
 #endif // HIERARCHY_H

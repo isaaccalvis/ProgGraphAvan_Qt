@@ -36,6 +36,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(hierarchy, SIGNAL(entitySelected(int)), inspector, SLOT(OnEntityChanged(int)));
 
+    // Connect Hierachy Create/ Delete with Scene
+    connect(hierarchy, SIGNAL(entityCreated(int)), scene, SLOT(CreateGameObject(int)));
+    connect(hierarchy, SIGNAL(entityDestroy(int)), scene, SLOT(DeleteGameObject(int)));
+
+
 }
 
 MainWindow::~MainWindow()
