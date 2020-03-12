@@ -39,6 +39,27 @@ Inspector::~Inspector()
 
 void Inspector::OnEntityChanged(GameObject* go)
 {
-    shape->show();
-    material->show();
+    //shape->show();
+    //material->show();
+    selectedGO = go;
+    // ===================== Load info =====================
+        // Transform
+    uiTransform->spinBox_TranslationX->setValue(go->transform.position[0]);
+    uiTransform->spinBox_TranslationY->setValue(go->transform.position[1]);
+    uiTransform->spinBox_TranslationZ->setValue(go->transform.position[2]);
+
+    uiTransform->spinBox_RotationX->setValue(go->transform.angle);
+    uiTransform->spinBox_RotationY->setValue(go->transform.angle);
+    uiTransform->spinBox_RotationZ->setValue(go->transform.angle);
+
+    uiTransform->spinBox_ScaleX->setValue(go->transform.scale[0]);
+    uiTransform->spinBox_ScaleY->setValue(go->transform.scale[1]);
+    uiTransform->spinBox_ScaleZ->setValue(go->transform.scale[1]); // No tinc ScaleZ !!
+
+        // Shape
+    uiShape->shapeBoxType->setCurrentIndex(go->sprite.GetTypeIndex());
+
+        // Material
+    //uiMaterial->spinBoxThickness->setValue();
+    //uiMaterial->comboBoxStyle->setCurrentIndex();
 }

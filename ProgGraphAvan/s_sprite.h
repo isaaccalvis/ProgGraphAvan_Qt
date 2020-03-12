@@ -13,6 +13,8 @@ class S_Sprite
 public:
     S_Sprite();
 
+    int GetTypeIndex() const;
+
 public:
     SHAPE_TYPE type = CIRCLE;
 };

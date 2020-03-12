@@ -32,6 +32,8 @@ private:
     QWidget* transform = nullptr;
     QWidget* shape = nullptr;
     QWidget* material = nullptr;
+
+    GameObject* selectedGO = nullptr;
 };
 
 #endif // INSPECTOR_H
