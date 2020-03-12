@@ -24,6 +24,15 @@ public:
 public slots:
     void OnEntityChanged(GameObject* go);
 
+    // Input Slots
+    void on_spinBox_PX_changed(double num);        // Position
+    void on_spinBox_PY_changed(double num);
+    void on_spinBox_PZ_changed(double num);
+    void on_spinBox_Angle_changed(double num);     // Angle
+    void on_spinBox_SX_changed(double num);        // Scale
+    void on_spinBox_SY_changed(double num);
+    void on_comboBox_Shape_changed(int num);    // Shape
+
 private:
     Ui::Transform* uiTransform = nullptr;
     Ui::Shape* uiShape = nullptr;

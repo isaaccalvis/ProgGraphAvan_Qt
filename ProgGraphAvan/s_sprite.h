@@ -14,6 +14,7 @@ public:
     S_Sprite();
 
     int GetTypeIndex() const;
+    void SetTypeIndex(int num);
 
 public:
     SHAPE_TYPE type = CIRCLE;

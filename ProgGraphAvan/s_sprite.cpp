@@ -9,3 +9,8 @@ int S_Sprite::GetTypeIndex() const
 {
     return (int)type;
 }
+
+void S_Sprite::SetTypeIndex(int num)
+{
+    type = (SHAPE_TYPE)num;
+}
