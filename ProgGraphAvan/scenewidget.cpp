@@ -36,9 +36,18 @@ void SceneWidget::DeleteGameObject(int num)
         {
             if ((*it)->GetId() == num)
             {
-                it = gameObjects.erase(it);
-                (*it)->SetId((*it)->GetId() - 1);
-                deleted = true;
+                if ((*it)->GetId() == gameObjects.size()-1)
+                {
+                    gameObjects.erase(it);
+                    deleted = true;
+                    break;
+                }
+                else
+                {
+                    it = gameObjects.erase(it);
+                    (*it)->SetId((*it)->GetId() - 1);
+                    deleted = true;
+                }
             }
         }
         else
