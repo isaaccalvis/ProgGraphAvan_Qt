@@ -21,6 +21,9 @@ public:
     explicit Inspector(QWidget *parent = nullptr);
     ~Inspector();
 
+signals:
+    void UpdateScene();
+
 public slots:
     void OnEntityChanged(GameObject* go);
 

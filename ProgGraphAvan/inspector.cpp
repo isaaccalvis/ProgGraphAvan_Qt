@@ -32,13 +32,13 @@ Inspector::Inspector(QWidget* parent) : QWidget(parent)
     setLayout(layout);
 
     // Connect
-    connect(uiTransform->spinBox_TranslationX, SIGNAL(valueChanged(double)), this, SLOT(on_spinBox_PX_changed(double)));
-    connect(uiTransform->spinBox_TranslationY, SIGNAL(valueChanged(double)), this, SLOT(on_spinBox_PY_changed(double)));
-    connect(uiTransform->spinBox_TranslationZ, SIGNAL(valueChanged(double)), this, SLOT(on_spinBox_PZ_changed(double)));
-    connect(uiTransform->spinBox_RotationX, SIGNAL(valueChanged(double)), this, SLOT(on_spinBox_Angle_changed(double)));
-    connect(uiTransform->spinBox_ScaleX, SIGNAL(valueChanged(double)), this, SLOT(on_spinBox_SX_changed(double)));
-    connect(uiTransform->spinBox_ScaleY, SIGNAL(valueChanged(double)), this, SLOT(on_spinBox_SY_changed(double)));
-    connect(uiShape->shapeBoxType, SIGNAL(currentIndexChanged(int)), this, SLOT(on_comboBox_Shape_changed(int)));
+    connect(uiTransform->spinBox_TranslationX,  SIGNAL(valueChanged(double)),       this, SLOT(on_spinBox_PX_changed(double)));
+    connect(uiTransform->spinBox_TranslationY,  SIGNAL(valueChanged(double)),       this, SLOT(on_spinBox_PY_changed(double)));
+    connect(uiTransform->spinBox_TranslationZ,  SIGNAL(valueChanged(double)),       this, SLOT(on_spinBox_PZ_changed(double)));
+    connect(uiTransform->spinBox_RotationX,     SIGNAL(valueChanged(double)),       this, SLOT(on_spinBox_Angle_changed(double)));
+    connect(uiTransform->spinBox_ScaleX,        SIGNAL(valueChanged(double)),       this, SLOT(on_spinBox_SX_changed(double)));
+    connect(uiTransform->spinBox_ScaleY,        SIGNAL(valueChanged(double)),       this, SLOT(on_spinBox_SY_changed(double)));
+    connect(uiShape->shapeBoxType,              SIGNAL(currentIndexChanged(int)),   this, SLOT(on_comboBox_Shape_changed(int)));
 }
 
 Inspector::~Inspector()
@@ -78,6 +78,7 @@ void Inspector::on_spinBox_PX_changed(double num)
     if (selectedGO != nullptr)
     {
         selectedGO->transform.position[0] = num;
+        UpdateScene();
     }
 }
 
@@ -86,6 +87,7 @@ void Inspector::on_spinBox_PY_changed(double num)
     if (selectedGO != nullptr)
     {
         selectedGO->transform.position[1] = num;
+        UpdateScene();
     }
 }
 
@@ -94,6 +96,7 @@ void Inspector::on_spinBox_PZ_changed(double num)
     if (selectedGO != nullptr)
     {
         selectedGO->transform.position[2] = num;
+        UpdateScene();
     }
 }
 
@@ -102,6 +105,7 @@ void Inspector::on_spinBox_Angle_changed(double num)
     if (selectedGO != nullptr)
     {
         selectedGO->transform.angle = num;
+        UpdateScene();
     }
 }
 
@@ -110,6 +114,7 @@ void Inspector::on_spinBox_SX_changed(double num)
     if (selectedGO != nullptr)
     {
         selectedGO->transform.scale[0] = num;
+        UpdateScene();
     }
 }
 
@@ -118,6 +123,7 @@ void Inspector::on_spinBox_SY_changed(double num)
     if (selectedGO != nullptr)
     {
         selectedGO->transform.scale[1] = num;
+        UpdateScene();
     }
 }
 
@@ -126,5 +132,6 @@ void Inspector::on_comboBox_Shape_changed(int num)
     if (selectedGO != nullptr)
     {
         selectedGO->sprite.SetTypeIndex(num);
+        UpdateScene();
     }
 }

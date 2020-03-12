@@ -41,6 +41,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Connect Scene (Modified) with Inspector
     connect(scene, SIGNAL(GameObjectSelected(GameObject*)),inspector, SLOT(OnEntityChanged(GameObject*)));
+
+    // Connect Inspector (Update) with Scene
+    connect(inspector, SIGNAL(UpdateScene()), scene, SLOT(update()));
 }
 
 MainWindow::~MainWindow()
