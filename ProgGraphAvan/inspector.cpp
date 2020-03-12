@@ -37,13 +37,8 @@ Inspector::~Inspector()
     delete uiTransform;
 }
 
-void Inspector::OnEntityChanged(int num)
+void Inspector::OnEntityChanged(GameObject* go)
 {
-    shape->hide();
-    material->hide();
-    if (num % 2 == 0)
-    {
-        shape->show();
-        material->show();
-    }
+    shape->show();
+    material->show();
 }

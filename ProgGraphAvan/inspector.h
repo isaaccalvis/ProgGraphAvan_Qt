@@ -5,6 +5,7 @@
 #include "ui_Transform.h"
 #include "ui_shape.h"
 #include "ui_material.h"
+#include "gameobject.h"
 
 namespace Ui {
 class Transform;
@@ -21,7 +22,7 @@ public:
     ~Inspector();
 
 public slots:
-    void OnEntityChanged(int num);
+    void OnEntityChanged(GameObject* go);
 
 private:
     Ui::Transform* uiTransform = nullptr;

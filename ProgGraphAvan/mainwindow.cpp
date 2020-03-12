@@ -34,13 +34,13 @@ MainWindow::MainWindow(QWidget *parent)
     connect(uiMainWindow->actionSave, SIGNAL(triggered()), this, SLOT(OnSaveClicked()));
     connect(uiMainWindow->actionOpen, SIGNAL(triggered()), this, SLOT(OnOpenClicked()));
 
-    connect(hierarchy, SIGNAL(entitySelected(int)), inspector, SLOT(OnEntityChanged(int)));
-
-    // Connect Hierachy Create/ Delete with Scene
+    // Connect Hierachy (Create/Delete/Modified) with Scene
     connect(hierarchy, SIGNAL(entityCreated(int)), scene, SLOT(CreateGameObject(int)));
     connect(hierarchy, SIGNAL(entityDestroy(int)), scene, SLOT(DeleteGameObject(int)));
+    connect(hierarchy, SIGNAL(entitySelected(int)), scene, SLOT(ChangeSelectedGameObject(int)));
 
-
+    // Connect Scene (Modified) with Inspector
+    connect(scene, SIGNAL(GameObjectSelected(GameObject*)),inspector, SLOT(OnEntityChanged(GameObject*)));
 }
 
 MainWindow::~MainWindow()
