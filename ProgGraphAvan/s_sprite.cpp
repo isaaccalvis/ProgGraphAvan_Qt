@@ -14,3 +14,13 @@ void S_Sprite::SetTypeIndex(int num)
 {
     type = (SHAPE_TYPE)num;
 }
+
+int S_Sprite::GetStrokeTypeIndex() const
+{
+    return (int)strokeStyle;
+}
+
+void S_Sprite::SettrokeTypeIndex(int num)
+{
+    strokeStyle = (STROKE_STYLE)num;
+}

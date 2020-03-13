@@ -98,27 +98,40 @@ void SceneWidget::paintEvent(QPaintEvent* event)
     pen.setColor(blackColor);
     pen.setStyle(Qt::PenStyle::DashLine);
     painter.setBrush(brush);
-    painter.setBrush(brush);
     painter.setPen(pen);
-
-    // Draw circle
-    /*
-    int r = 64;
-    int w = r * 2;
-    int h = r * 2;
-    int x = rect().width() / 2 - r;
-    int y = rect().height() / 2 - r;
-    QRect circleRect(x,y,w,h);
-    painter.drawEllipse(circleRect);
-    */
 
     for (std::list<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); it++)
     {
+        brush.setColor((*it)->sprite.fillColor);
+        pen.setColor((*it)->sprite.strokeColor);
+        pen.setWidth((*it)->sprite.strokeThickness);
+
+        switch((*it)->sprite.strokeStyle)
+        {
+        case STROKE_STYLE::SOLID:
+            pen.setStyle(Qt::PenStyle::SolidLine);
+            break;
+        case STROKE_STYLE::DASHED:
+            pen.setStyle(Qt::PenStyle::DashLine);
+            break;
+        }
+
+        painter.setBrush(brush);
+        painter.setPen(pen);
+
         int x = (*it)->transform.position[0];
         int y = (*it)->transform.position[1];
         int w = (*it)->transform.scale[0];
         int h = (*it)->transform.scale[1];
-        QRect circleRect(x,y,w,h);
-        painter.drawEllipse(circleRect);
+        QRect rect(x,y,w,h);
+        switch((*it)->sprite.type)
+        {
+        case SHAPE_TYPE::CIRCLE:
+            painter.drawRect(rect);
+            break;
+        case SHAPE_TYPE::QUAD:
+            painter.drawEllipse(rect);
+            break;
+        }
     }
 }

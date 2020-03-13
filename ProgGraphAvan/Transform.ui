@@ -24,13 +24,25 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="spinBox_TranslationX"/>
+      <widget class="QDoubleSpinBox" name="spinBox_TranslationX">
+       <property name="maximum">
+        <double>999.990000000000009</double>
+       </property>
+      </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="spinBox_TranslationY"/>
+      <widget class="QDoubleSpinBox" name="spinBox_TranslationY">
+       <property name="maximum">
+        <double>999.990000000000009</double>
+       </property>
+      </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="spinBox_TranslationZ"/>
+      <widget class="QDoubleSpinBox" name="spinBox_TranslationZ">
+       <property name="maximum">
+        <double>999.990000000000009</double>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -45,12 +57,6 @@
      </item>
      <item>
       <widget class="QDoubleSpinBox" name="spinBox_RotationX"/>
-     </item>
-     <item>
-      <widget class="QDoubleSpinBox" name="spinBox_RotationY"/>
-     </item>
-     <item>
-      <widget class="QDoubleSpinBox" name="spinBox_RotationZ"/>
      </item>
     </layout>
    </item>
@@ -68,9 +74,6 @@
      </item>
      <item>
       <widget class="QDoubleSpinBox" name="spinBox_ScaleY"/>
-     </item>
-     <item>
-      <widget class="QDoubleSpinBox" name="spinBox_ScaleZ"/>
      </item>
     </layout>
    </item>
