@@ -44,6 +44,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Connect Inspector (Update) with Scene
     connect(inspector, SIGNAL(UpdateScene()), scene, SLOT(update()));
+
+    // Connect Inspector with Hierarchy
+    connect(inspector, SIGNAL(GameObjectChangedName(int, QString&)), hierarchy, SLOT(OnNameChanged(int, QString&)));
 }
 
 MainWindow::~MainWindow()

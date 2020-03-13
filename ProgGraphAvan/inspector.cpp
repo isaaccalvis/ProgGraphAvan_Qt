@@ -46,7 +46,7 @@ Inspector::Inspector(QWidget* parent) : QWidget(parent)
     connect(uiMaterial->comboBoxStyle,          SIGNAL(currentIndexChanged(int)),   this, SLOT(on_comboBox_StrokeStyle_changed(int)));
     connect(uiMaterial->pushButtonFillColor,    SIGNAL(clicked()),                  this, SLOT(on_pushButton_FillColor_changed()));
     connect(uiMaterial->pushButtonStrokeColor,  SIGNAL(clicked()),                  this, SLOT(on_pushButton_StrokeColor_changed()));
-
+    connect(uiTransform->lineEditName,          SIGNAL(editingFinished()),          this, SLOT(on_name_changed()));
 }
 
 Inspector::~Inspector()
@@ -74,6 +74,9 @@ void Inspector::OnEntityChanged(GameObject* go)
         // Material
     uiMaterial->spinBoxThickness->setValue(go->sprite.strokeThickness);
     uiMaterial->comboBoxStyle->setCurrentIndex(go->sprite.GetStrokeTypeIndex());
+
+        // Name (Transform)
+    uiTransform->lineEditName->setText(go->name);
 }
 
 void Inspector::on_spinBox_PX_changed(double num)
@@ -173,6 +176,16 @@ void Inspector::on_pushButton_StrokeColor_changed()
     {
         QColor color = QColorDialog::getColor(selectedGO->sprite.strokeColor, this, "Choose Color");
         selectedGO->sprite.strokeColor = color;
+        UpdateScene();
+    }
+}
+
+void Inspector::on_name_changed()
+{
+    if (selectedGO != nullptr)
+    {
+        selectedGO->name = uiTransform->lineEditName->text();
+        GameObjectChangedName(selectedGO->GetId(),selectedGO->name);
         UpdateScene();
     }
 }

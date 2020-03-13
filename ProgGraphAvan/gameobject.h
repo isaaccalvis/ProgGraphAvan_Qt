@@ -19,6 +19,9 @@ public:
 
 private:
     int num = -1;
+
+public:
+    QString name = "Entity";
 };
 
 #endif // GAMEOBJECT_H

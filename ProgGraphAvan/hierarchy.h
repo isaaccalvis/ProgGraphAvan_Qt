@@ -24,6 +24,7 @@ public slots:
     void OnAddEntityClick();
     void OnRemoveEntityClick();
     void OnListElementClicked(int currentRow);
+    void OnNameChanged(int row, QString& name);
 
 private:
     Ui::Hierarchy *ui;

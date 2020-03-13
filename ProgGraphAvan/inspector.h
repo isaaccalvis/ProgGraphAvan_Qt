@@ -23,6 +23,7 @@ public:
 
 signals:
     void UpdateScene();
+    void GameObjectChangedName(int row, QString& name);
 
 public slots:
     void OnEntityChanged(GameObject* go);
@@ -39,6 +40,7 @@ public slots:
     void on_comboBox_StrokeStyle_changed(int num);
     void on_pushButton_FillColor_changed();
     void on_pushButton_StrokeColor_changed();
+    void on_name_changed();
 
 private:
     Ui::Transform* uiTransform = nullptr;

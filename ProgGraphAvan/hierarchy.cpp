@@ -35,6 +35,11 @@ void Hierarchy::OnRemoveEntityClick()
 void Hierarchy::OnListElementClicked(int currentRow)
 {
     selectedId = currentRow;
-    qInfo("%i", selectedId);
     emit entitySelected(selectedId);
+}
+
+void Hierarchy::OnNameChanged(int row, QString& name)
+{
+    qDebug("Name: %s, Row: %i", name.toStdString().c_str(), row);
+    ui->listWidget->item(row)->setText(name);
 }
