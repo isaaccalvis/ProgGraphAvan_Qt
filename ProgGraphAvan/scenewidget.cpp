@@ -2,6 +2,11 @@
 #include <QPainter>
 #include <vector>
 
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QFile>
+
 SceneWidget::SceneWidget(QWidget* parent) : QWidget(parent)
 {
     setAutoFillBackground(true);
@@ -152,4 +157,58 @@ void SceneWidget::paintEvent(QPaintEvent* event)
             break;
         }
     }
+}
+
+void SceneWidget::ReadJsonScene()
+{
+    QString val;
+    QFile readFile;
+    readFile.setFileName("Proba.json");
+    readFile.open(QIODevice::ReadOnly | QIODevice::Text);
+    val = readFile.readAll();
+    readFile.close();
+
+    QJsonDocument doc = QJsonDocument::fromJson(val.toUtf8());
+    QJsonArray array(doc.array());
+    for (int i = 0; i < array.size(); i++)
+    {
+
+    }
+}
+
+void SceneWidget::WriteJsonScene()
+{
+    QJsonArray array;
+    for (std::list<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); it++)
+    {
+        QJsonObject go;
+        go.insert("Name", (*it)->name);
+        go.insert("T_PosX", (*it)->transform.position[0]);
+        go.insert("T_PosY", (*it)->transform.position[1]);
+        go.insert("T_PosZ", (*it)->transform.position[2]);
+        go.insert("T_Angle", (*it)->transform.angle);
+        go.insert("T_ScaleX", (*it)->transform.scale[0]);
+        go.insert("T_ScaleY", (*it)->transform.scale[1]);
+        go.insert("S_Shape", (*it)->sprite.GetTypeIndex());
+        int rgba[4];
+        go.insert("S_strokeThickness", (*it)->sprite.strokeThickness);
+        go.insert("S_strokeStyle", (*it)->sprite.strokeStyle);
+        (*it)->sprite.strokeColor.getRgb(&rgba[0],&rgba[1],&rgba[2],&rgba[3]);
+        go.insert("S_strokeColorR", rgba[0]);
+        go.insert("S_strokeColorG", rgba[1]);
+        go.insert("S_strokeColorB", rgba[2]);
+        go.insert("S_strokeColorA", rgba[3]);
+        (*it)->sprite.fillColor.getRgb(&rgba[0],&rgba[1],&rgba[2],&rgba[3]);
+        go.insert("S_fillColorR", rgba[0]);
+        go.insert("S_fillColorG", rgba[1]);
+        go.insert("S_fillColorB", rgba[2]);
+        go.insert("S_fillColorA", rgba[3]);
+
+        array.push_back(go);
+    }
+    QJsonDocument doc(array);
+    QFile saveFile("Proba.json");
+    saveFile.open(QIODevice::WriteOnly);
+    saveFile.write(doc.toJson());
+    saveFile.close();
 }

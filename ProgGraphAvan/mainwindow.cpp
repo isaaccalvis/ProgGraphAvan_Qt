@@ -31,8 +31,9 @@ MainWindow::MainWindow(QWidget *parent)
     uiMainWindow->menuView->addAction(uiMainWindow->DockWindowInspector->toggleViewAction());
     uiMainWindow->menuView->addAction(uiMainWindow->DockWindowRendering->toggleViewAction());
 
-    connect(uiMainWindow->actionSave, SIGNAL(triggered()), this, SLOT(OnSaveClicked()));
-    connect(uiMainWindow->actionOpen, SIGNAL(triggered()), this, SLOT(OnOpenClicked()));
+    // Save/Load Options
+    connect(uiMainWindow->actionSave, SIGNAL(triggered()), scene, SLOT(WriteJsonScene()));
+    connect(uiMainWindow->actionOpen, SIGNAL(triggered()), scene, SLOT(ReadJsonScene()));
 
     // Connect Hierachy (Create/Delete/Modified) with Scene
     connect(hierarchy, SIGNAL(entityCreated(int)), scene, SLOT(CreateGameObject(int)));

@@ -22,6 +22,8 @@ public slots:
     void CreateGameObject(int num);
     void DeleteGameObject(int num);
     void ChangeSelectedGameObject(int num);
+    void ReadJsonScene();
+    void WriteJsonScene();
 
 private:
     void paintEvent(QPaintEvent* event) override;
