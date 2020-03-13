@@ -48,6 +48,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Connect Inspector with Hierarchy
     connect(inspector, SIGNAL(GameObjectChangedName(int, QString&)), hierarchy, SLOT(OnNameChanged(int, QString&)));
+
+    // Connect Scene with Hierarchy
+    connect(scene, SIGNAL(GenerateEmptyGameObject()), hierarchy, SLOT(OnAddEntityClick()));
+    connect(scene, SIGNAL(GameObjectChangedName(int, QString&)), hierarchy, SLOT(OnNameChanged(int, QString&)));
 }
 
 MainWindow::~MainWindow()

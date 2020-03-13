@@ -172,8 +172,35 @@ void SceneWidget::ReadJsonScene()
     QJsonArray array(doc.array());
     for (int i = 0; i < array.size(); i++)
     {
+        GenerateEmptyGameObject();
+        GameObject* go = gameObjects.back();
+        QJsonValue value(array[i]);
 
+        go->name = QString(value.toObject().value("Name").toString());
+        go->transform.position[0] = value.toObject().value("T_PosX").toDouble();
+        go->transform.position[1] = value.toObject().value("T_PosY").toDouble();
+        go->transform.position[2] = value.toObject().value("T_PosZ").toDouble();
+        go->transform.angle = value.toObject().value("Angle").toDouble();
+        go->transform.scale[0] = value.toObject().value("T_ScaleX").toDouble();
+        go->transform.scale[1] = value.toObject().value("T_ScaleY").toDouble();
+
+        go->sprite.SetTypeIndex(value.toObject().value("S_Shape").toInt());
+        go->sprite.strokeThickness = value.toObject().value("S_strokeThickness").toInt();
+        go->sprite.SettrokeTypeIndex(value.toObject().value("S_strokeStyle").toInt());
+
+        go->sprite.fillColor = QColor(value.toObject().value("S_fillColorR").toInt(),
+                value.toObject().value("S_fillColorG").toInt(),
+                value.toObject().value("S_fillColorB").toInt(),
+                value.toObject().value("S_fillColorA").toInt());
+        go->sprite.strokeColor = QColor(value.toObject().value("S_strokeColorR").toInt(),
+                value.toObject().value("S_strokeColorG").toInt(),
+                value.toObject().value("S_strokeColorB").toInt(),
+                value.toObject().value("S_strokeColorA").toInt());
+
+        gameObjects.push_back(go);
+        GameObjectChangedName(go->GetId(), go->name);
     }
+    update();
 }
 
 void SceneWidget::WriteJsonScene()

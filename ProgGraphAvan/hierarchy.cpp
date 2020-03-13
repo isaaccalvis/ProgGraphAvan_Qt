@@ -40,6 +40,5 @@ void Hierarchy::OnListElementClicked(int currentRow)
 
 void Hierarchy::OnNameChanged(int row, QString& name)
 {
-    qDebug("Name: %s, Row: %i", name.toStdString().c_str(), row);
     ui->listWidget->item(row)->setText(name);
 }

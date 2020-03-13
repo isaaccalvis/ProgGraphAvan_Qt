@@ -17,6 +17,8 @@ public:
 
 signals:
     void GameObjectSelected(GameObject* go);
+    void GenerateEmptyGameObject(); // Amb això genero un game object al final de la llista que el fare servir per carregar escenes des de json (TODO: treure aixo)
+    void GameObjectChangedName(int row, QString& name);
 
 public slots:
     void CreateGameObject(int num);
