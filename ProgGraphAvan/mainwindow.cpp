@@ -39,6 +39,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(uiMainWindow->actionSave, SIGNAL(triggered()), scene, SLOT(WriteJsonScene()));
     connect(uiMainWindow->actionOpen, SIGNAL(triggered()), scene, SLOT(ReadJsonScene()));
     connect(uiMainWindow->actionClose, SIGNAL(triggered()), this, SLOT(OnCloseClicked()));
+    connect(uiMainWindow->actionUndo, SIGNAL(triggered()), this, SLOT(OnUndoClicked()));
+    connect(uiMainWindow->actionRedo, SIGNAL(triggered()), this, SLOT(OnRedoClicked()));
 
     // Connect Hierachy (Create/Delete/Modified) with Scene
     connect(hierarchy, SIGNAL(entityCreated(int)), scene, SLOT(CreateGameObject(int)));
@@ -64,25 +66,21 @@ MainWindow::~MainWindow()
     delete uiMainWindow;
 }
 
-void MainWindow::OnSaveClicked()
-{
-
-}
-
-void MainWindow::OnOpenClicked()
-{
-    QMessageBox::StandardButton button = QMessageBox::question(this, "1...", "2...");
-    if (button == QMessageBox::Yes)
-    {
-        qDebug("Yes");
-    }
-    else
-    {
-        qDebug("No");
-    }
-}
-
 void MainWindow::OnCloseClicked()
 {
-    QApplication::quit();
+    QMessageBox::StandardButton button = QMessageBox::question(this, "Confirmation Exit", "Are you sure you want to exit?");
+    if (button == QMessageBox::Yes)
+    {
+        QApplication::quit();
+    }
+}
+
+void MainWindow::OnUndoClicked()
+{
+
+}
+
+void MainWindow::OnRedoClicked()
+{
+
 }

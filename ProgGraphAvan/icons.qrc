@@ -3,5 +3,7 @@
         <file alias="save">icons/Disquette.png</file>
         <file alias="open">icons/Folder.png</file>
         <file alias="close">icons/Badge-multiply.png</file>
+        <file alias="goBack">icons/Arrow left.png</file>
+        <file alias="goForward">icons/Arrow right.png</file>
     </qresource>
 </RCC>
