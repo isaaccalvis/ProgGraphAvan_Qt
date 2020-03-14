@@ -28,6 +28,8 @@ public slots:
     void ReadJsonScene();
     void WriteJsonScene();
     void GameObjectModified(GameObject* go);
+    void OnUndo();
+    void OnRedo();
 
 public:
     UndoRedoSystem* undoRedoSystem = nullptr;

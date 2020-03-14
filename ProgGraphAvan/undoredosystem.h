@@ -33,10 +33,11 @@ public:
 
 private:
     int FindPlace();
+    void PrintBucket(int position);
 
 private:
     std::vector<RecoveryGameObject*> recoveryBucket;
-    unsigned int index = 0;
+    unsigned int actualIndex = 0;
 };
 
 #endif // UNDOREDOSYSTEM_H

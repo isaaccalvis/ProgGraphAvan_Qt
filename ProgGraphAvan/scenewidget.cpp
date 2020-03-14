@@ -245,3 +245,13 @@ void SceneWidget::GameObjectModified(GameObject* go)
 {
     undoRedoSystem->AddGameObject(go);
 }
+
+void SceneWidget::OnUndo()
+{
+    undoRedoSystem->GoBack();
+}
+
+void SceneWidget::OnRedo()
+{
+    undoRedoSystem->GoFront();
+}

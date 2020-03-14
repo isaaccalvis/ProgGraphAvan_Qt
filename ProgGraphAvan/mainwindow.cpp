@@ -36,12 +36,15 @@ MainWindow::MainWindow(QWidget *parent)
     uiMainWindow->menuView->addAction(uiMainWindow->DockWindowInspector->toggleViewAction());
     uiMainWindow->menuView->addAction(uiMainWindow->DockWindowRendering->toggleViewAction());
 
-    // Close/Save/Load Options
+    // Close/Save/Load/Undo/Redo Options
     connect(uiMainWindow->actionSave, SIGNAL(triggered()), scene, SLOT(WriteJsonScene()));
     connect(uiMainWindow->actionOpen, SIGNAL(triggered()), scene, SLOT(ReadJsonScene()));
     connect(uiMainWindow->actionClose, SIGNAL(triggered()), this, SLOT(OnCloseClicked()));
     connect(uiMainWindow->actionUndo, SIGNAL(triggered()), this, SLOT(OnUndoClicked()));
     connect(uiMainWindow->actionRedo, SIGNAL(triggered()), this, SLOT(OnRedoClicked()));
+    connect(uiMainWindow->actionUndo, SIGNAL(triggered()), scene, SLOT(OnUndo()));
+    connect(uiMainWindow->actionRedo, SIGNAL(triggered()), scene, SLOT(OnRedo()));
+
     // Connect Hierachy (Create/Delete/Modified) with Scene
     connect(hierarchy, SIGNAL(entityCreated(int)), scene, SLOT(CreateGameObject(int)));
     connect(hierarchy, SIGNAL(entityDestroy(int)), scene, SLOT(DeleteGameObject(int)));
