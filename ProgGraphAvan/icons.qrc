@@ -2,5 +2,6 @@
     <qresource prefix="/icons">
         <file alias="save">icons/Disquette.png</file>
         <file alias="open">icons/Folder.png</file>
+        <file alias="close">icons/Badge-multiply.png</file>
     </qresource>
 </RCC>

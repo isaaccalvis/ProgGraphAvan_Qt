@@ -25,6 +25,7 @@ public:
 private slots:
     void OnSaveClicked();
     void OnOpenClicked();
+    void OnCloseClicked();
 
 private:
     Ui::MainWindow *uiMainWindow = nullptr;

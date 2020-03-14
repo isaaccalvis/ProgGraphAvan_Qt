@@ -4,13 +4,17 @@
 #include "inspector.h"
 #include "scenewidget.h"
 #include <QMessageBox>
+#include <QStyle>
+#include <QStyleFactory>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , uiMainWindow(new Ui::MainWindow)
 {
-    qDebug("Creating Window\n");
     uiMainWindow->setupUi(this);
+    QApplication::setStyle(QStyleFactory::create("Fusion"));
+    setStyleSheet("background-color:lightGray");
+
 
     // Hierarchy
     hierarchy = new Hierarchy();
@@ -31,9 +35,10 @@ MainWindow::MainWindow(QWidget *parent)
     uiMainWindow->menuView->addAction(uiMainWindow->DockWindowInspector->toggleViewAction());
     uiMainWindow->menuView->addAction(uiMainWindow->DockWindowRendering->toggleViewAction());
 
-    // Save/Load Options
+    // Close/Save/Load Options
     connect(uiMainWindow->actionSave, SIGNAL(triggered()), scene, SLOT(WriteJsonScene()));
     connect(uiMainWindow->actionOpen, SIGNAL(triggered()), scene, SLOT(ReadJsonScene()));
+    connect(uiMainWindow->actionClose, SIGNAL(triggered()), this, SLOT(OnCloseClicked()));
 
     // Connect Hierachy (Create/Delete/Modified) with Scene
     connect(hierarchy, SIGNAL(entityCreated(int)), scene, SLOT(CreateGameObject(int)));
@@ -75,4 +80,9 @@ void MainWindow::OnOpenClicked()
     {
         qDebug("No");
     }
+}
+
+void MainWindow::OnCloseClicked()
+{
+    QApplication::quit();
 }
