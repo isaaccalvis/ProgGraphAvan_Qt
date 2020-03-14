@@ -10,11 +10,13 @@
 SceneWidget::SceneWidget(QWidget* parent) : QWidget(parent)
 {
     setAutoFillBackground(true);
+    undoRedoSystem = new UndoRedoSystem();
 }
 
 SceneWidget::~SceneWidget()
 {
     // TODO: Clean GameObjects list
+    delete undoRedoSystem;
 }
 
 QSize SceneWidget::sizeHint() const
@@ -237,4 +239,9 @@ void SceneWidget::WriteJsonScene()
     saveFile.open(QIODevice::WriteOnly);
     saveFile.write(doc.toJson());
     saveFile.close();
+}
+
+void SceneWidget::GameObjectModified(GameObject* go)
+{
+    undoRedoSystem->AddGameObject(go);
 }

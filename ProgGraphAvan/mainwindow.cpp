@@ -55,8 +55,8 @@ MainWindow::MainWindow(QWidget *parent)
     // Connect Scene with Hierarchy
     connect(scene, SIGNAL(GenerateEmptyGameObject()), hierarchy, SLOT(OnAddEntityClick()));
     connect(scene, SIGNAL(GameObjectChangedName(int, QString&)), hierarchy, SLOT(OnNameChanged(int, QString&)));
-    // Connect Inspector with UndoRedoSystem
-    //connect(inspector, SIGNAL(GameObjectModified(GameObject*)), undoRedoSystem, SLOT(AddGameObject(GameObject*)));
+    // Connect Inspector with Scene ==> UndoRedoSystem
+    connect(inspector, SIGNAL(GameObjectModified(GameObject*)), scene, SLOT(GameObjectModified(GameObject*)));
 }
 
 MainWindow::~MainWindow()

@@ -1,7 +1,6 @@
 #ifndef UNDOREDOSYSTEM_H
 #define UNDOREDOSYSTEM_H
 
-#include <QWidget>
 #include <vector>
 #include "gameobject.h"
 
@@ -27,7 +26,7 @@ public:
     UndoRedoSystem();
     ~UndoRedoSystem();
 
-public slots:
+public:
     void AddGameObject(GameObject* go);
     void GoBack();
     void GoFront();

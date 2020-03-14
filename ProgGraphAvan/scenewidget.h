@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <list>
 #include "gameobject.h"
+#include "undoredosystem.h"
 
 class SceneWidget : public QWidget
 {
@@ -26,6 +27,10 @@ public slots:
     void ChangeSelectedGameObject(int num);
     void ReadJsonScene();
     void WriteJsonScene();
+    void GameObjectModified(GameObject* go);
+
+public:
+    UndoRedoSystem* undoRedoSystem = nullptr;
 
 private:
     void paintEvent(QPaintEvent* event) override;
