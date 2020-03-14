@@ -23,7 +23,8 @@ SOURCES += \
     mainwindow.cpp \
     s_sprite.cpp \
     s_transform.cpp \
-    scenewidget.cpp
+    scenewidget.cpp \
+    undoredosystem.cpp
 
 HEADERS += \
     gameobject.h \
@@ -32,7 +33,8 @@ HEADERS += \
     mainwindow.h \
     s_sprite.h \
     s_transform.h \
-    scenewidget.h
+    scenewidget.h \
+    undoredosystem.h
 
 FORMS += \
     Transform.ui \

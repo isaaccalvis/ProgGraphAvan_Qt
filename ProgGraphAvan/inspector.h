@@ -24,6 +24,7 @@ public:
 signals:
     void UpdateScene();
     void GameObjectChangedName(int row, QString& name);
+    void GameObjectModified(GameObject* go);
 
 public slots:
     void OnEntityChanged(GameObject* go);

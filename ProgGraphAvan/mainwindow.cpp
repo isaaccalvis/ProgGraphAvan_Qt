@@ -3,6 +3,7 @@
 #include "hierarchy.h"
 #include "inspector.h"
 #include "scenewidget.h"
+#include "undoredosystem.h"
 #include <QMessageBox>
 #include <QStyle>
 #include <QStyleFactory>
@@ -41,24 +42,21 @@ MainWindow::MainWindow(QWidget *parent)
     connect(uiMainWindow->actionClose, SIGNAL(triggered()), this, SLOT(OnCloseClicked()));
     connect(uiMainWindow->actionUndo, SIGNAL(triggered()), this, SLOT(OnUndoClicked()));
     connect(uiMainWindow->actionRedo, SIGNAL(triggered()), this, SLOT(OnRedoClicked()));
-
     // Connect Hierachy (Create/Delete/Modified) with Scene
     connect(hierarchy, SIGNAL(entityCreated(int)), scene, SLOT(CreateGameObject(int)));
     connect(hierarchy, SIGNAL(entityDestroy(int)), scene, SLOT(DeleteGameObject(int)));
     connect(hierarchy, SIGNAL(entitySelected(int)), scene, SLOT(ChangeSelectedGameObject(int)));
-
     // Connect Scene (Modified) with Inspector
     connect(scene, SIGNAL(GameObjectSelected(GameObject*)),inspector, SLOT(OnEntityChanged(GameObject*)));
-
     // Connect Inspector (Update) with Scene
     connect(inspector, SIGNAL(UpdateScene()), scene, SLOT(update()));
-
     // Connect Inspector with Hierarchy
     connect(inspector, SIGNAL(GameObjectChangedName(int, QString&)), hierarchy, SLOT(OnNameChanged(int, QString&)));
-
     // Connect Scene with Hierarchy
     connect(scene, SIGNAL(GenerateEmptyGameObject()), hierarchy, SLOT(OnAddEntityClick()));
     connect(scene, SIGNAL(GameObjectChangedName(int, QString&)), hierarchy, SLOT(OnNameChanged(int, QString&)));
+    // Connect Inspector with UndoRedoSystem
+    //connect(inspector, SIGNAL(GameObjectModified(GameObject*)), undoRedoSystem, SLOT(AddGameObject(GameObject*)));
 }
 
 MainWindow::~MainWindow()
