@@ -52,14 +52,14 @@ void UndoRedoSystem::AddGameObject(GameObject* go)
         recoveryBucket[position]->copy_gameObject.sprite.strokeThickness = go->sprite.strokeThickness;
 
 
-        //int rgba[4];
-        //go->sprite.fillColor.getRgb(&rgba[0],&rgba[1],&rgba[2],&rgba[3]);
-        //recoveryBucket[position]->copy_gameObject.sprite.fillColor.setRgb(rgba[0],rgba[1],rgba[2],rgba[3]);
-        //go->sprite.strokeColor.getRgb(&rgba[0],&rgba[1],&rgba[2],&rgba[3]);
-        //recoveryBucket[position]->copy_gameObject.sprite.strokeColor.setRgb(rgba[0],rgba[1],rgba[2],rgba[3]);
+        int rgba[4];
+        go->sprite.fillColor.getRgb(&rgba[0],&rgba[1],&rgba[2],&rgba[3]);
+        recoveryBucket[position]->copy_gameObject.sprite.fillColor.setRgb(rgba[0],rgba[1],rgba[2],rgba[3]);
+        go->sprite.strokeColor.getRgb(&rgba[0],&rgba[1],&rgba[2],&rgba[3]);
+        recoveryBucket[position]->copy_gameObject.sprite.strokeColor.setRgb(rgba[0],rgba[1],rgba[2],rgba[3]);
 
         // Comprobacions
-        PrintBucket(-1);
+        PrintBucket();
     }
 }
 
@@ -73,12 +73,12 @@ void UndoRedoSystem::GoBack()
         recoveryBucket[actualIndex]->original_gameObject->SetId(recoveryBucket[actualIndex]->copy_gameObject.GetId());
 
         qDebug("prev %i",recoveryBucket[actualIndex]->original_gameObject->transform.position[2]);
-        recoveryBucket[actualIndex]->original_gameObject->transform.position[0] = recoveryBucket[actualIndex]->copy_gameObject.transform.position[0];
-        recoveryBucket[actualIndex]->original_gameObject->transform.position[1] = recoveryBucket[actualIndex]->copy_gameObject.transform.position[1];
-        recoveryBucket[actualIndex]->original_gameObject->transform.position[2] = recoveryBucket[actualIndex]->copy_gameObject.transform.position[2];
-        recoveryBucket[actualIndex]->original_gameObject->transform.angle = recoveryBucket[actualIndex]->copy_gameObject.transform.angle;
-        recoveryBucket[actualIndex]->original_gameObject->transform.scale[0] = recoveryBucket[actualIndex]->copy_gameObject.transform.scale[0];
-        recoveryBucket[actualIndex]->original_gameObject->transform.scale[1] = recoveryBucket[actualIndex]->copy_gameObject.transform.scale[1];
+        recoveryBucket[actualIndex]->original_gameObject->transform.position[0] =   recoveryBucket[actualIndex]->copy_gameObject.transform.position[0];
+        recoveryBucket[actualIndex]->original_gameObject->transform.position[1] =   recoveryBucket[actualIndex]->copy_gameObject.transform.position[1];
+        recoveryBucket[actualIndex]->original_gameObject->transform.position[2] =   recoveryBucket[actualIndex]->copy_gameObject.transform.position[2];
+        recoveryBucket[actualIndex]->original_gameObject->transform.angle =         recoveryBucket[actualIndex]->copy_gameObject.transform.angle;
+        recoveryBucket[actualIndex]->original_gameObject->transform.scale[0] =      recoveryBucket[actualIndex]->copy_gameObject.transform.scale[0];
+        recoveryBucket[actualIndex]->original_gameObject->transform.scale[1] =      recoveryBucket[actualIndex]->copy_gameObject.transform.scale[1];
         qDebug("post %i",recoveryBucket[actualIndex]->original_gameObject->transform.position[2]);
 
         //recoveryBucket[actualIndex]->copy_gameObject.sprite.SetTypeIndex(go->sprite.GetTypeIndex());
@@ -124,44 +124,36 @@ int UndoRedoSystem::FindPlace()
         recoveryBucket[BUCKET_SIZE-1] = aux[0];
         position = BUCKET_SIZE - 1;
     }
+    actualIndex = position;
     return position;
 }
 
-void UndoRedoSystem::PrintBucket(int position)
+void UndoRedoSystem::PrintBucket()
 {
-    if (position < 0)
+    qDebug("==== OpenBucket ====");
+    for (int i = 0; i < recoveryBucket.size(); i++)
     {
-        qDebug("==== OpenBucket ====");
-        for (int i = 0; i < recoveryBucket.size(); i++)
-        {
-        qDebug("Index = %i, Name: %s, Id: %i, TransformX: %f, TransformY: %f, TransformZ = %f, Angle: %f, ScaleX: %f, ScaleY: %f, Shape = %i",
-               i,
-               recoveryBucket[i]->copy_gameObject.name.toStdString().c_str(),
-               recoveryBucket[i]->copy_gameObject.GetId(),
-               recoveryBucket[i]->copy_gameObject.transform.position[0],
-               recoveryBucket[i]->copy_gameObject.transform.position[1],
-               recoveryBucket[i]->copy_gameObject.transform.position[2],
-               recoveryBucket[i]->copy_gameObject.transform.angle,
-               recoveryBucket[i]->copy_gameObject.transform.scale[0],
-               recoveryBucket[i]->copy_gameObject.transform.scale[1],
-               recoveryBucket[i]->copy_gameObject.sprite.GetStrokeTypeIndex()
-            );
-        }
-        qDebug("==== CloseBucket ====");
+    qDebug("Index = %i, Name: %s, Id: %i, TransformX: %.2f, TransformY: %.2f, TransformZ = %.2f, Angle: %.2f, ScaleX: %.2f, ScaleY: %.2f, Shape = %i, Stroke = %i S_Thickness %i",
+           i,
+           recoveryBucket[i]->copy_gameObject.name.toStdString().c_str(),
+           recoveryBucket[i]->copy_gameObject.GetId(),
+           recoveryBucket[i]->copy_gameObject.transform.position[0],
+           recoveryBucket[i]->copy_gameObject.transform.position[1],
+           recoveryBucket[i]->copy_gameObject.transform.position[2],
+           recoveryBucket[i]->copy_gameObject.transform.angle,
+           recoveryBucket[i]->copy_gameObject.transform.scale[0],
+           recoveryBucket[i]->copy_gameObject.transform.scale[1],
+           recoveryBucket[i]->copy_gameObject.sprite.GetTypeIndex(),
+           recoveryBucket[i]->copy_gameObject.sprite.GetStrokeTypeIndex(),
+           recoveryBucket[i]->copy_gameObject.sprite.strokeThickness
+        );
+    int rgba[4];
+    int rgba2[4];
+    recoveryBucket[i]->copy_gameObject.sprite.fillColor.getRgb(&rgba[0],&rgba[1],&rgba[2],&rgba[3]);
+    recoveryBucket[i]->copy_gameObject.sprite.strokeColor.getRgb(&rgba2[0],&rgba2[1],&rgba2[2],&rgba2[3]);
+
+    qDebug("Fill R: %i, G: %i, B: %i, A: %i :::: Stroke R: %i, G: %i, B: %i, A: %i",
+           rgba[0],rgba[1],rgba[2],rgba[3], rgba2[0],rgba2[1],rgba2[2],rgba2[3]);
     }
-    else
-    {
-        qDebug("Index = %i, Name: %s, Id: %i, TransformX: %f, TransformY: %f, TransformZ = %f, Angle: %f, ScaleX: %f, ScaleY: %f, Shape = %i",
-               position,
-               recoveryBucket[position]->copy_gameObject.name.toStdString().c_str(),
-               recoveryBucket[position]->copy_gameObject.GetId(),
-               recoveryBucket[position]->copy_gameObject.transform.position[0],
-               recoveryBucket[position]->copy_gameObject.transform.position[1],
-               recoveryBucket[position]->copy_gameObject.transform.position[2],
-               recoveryBucket[position]->copy_gameObject.transform.angle,
-               recoveryBucket[position]->copy_gameObject.transform.scale[0],
-               recoveryBucket[position]->copy_gameObject.transform.scale[1],
-               recoveryBucket[position]->copy_gameObject.sprite.GetStrokeTypeIndex()
-                );
-    }
+    qDebug("==== CloseBucket ====");
 }

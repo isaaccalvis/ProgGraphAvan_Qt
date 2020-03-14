@@ -33,7 +33,7 @@ public:
 
 private:
     int FindPlace();
-    void PrintBucket(int position);
+    void PrintBucket();
 
 private:
     std::vector<RecoveryGameObject*> recoveryBucket;
