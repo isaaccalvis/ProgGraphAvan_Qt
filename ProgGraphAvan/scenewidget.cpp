@@ -170,6 +170,8 @@ void SceneWidget::ReadJsonScene()
 
     QJsonDocument doc = QJsonDocument::fromJson(val.toUtf8());
     QJsonArray array(doc.array());
+    qDebug("Size at read: %i", array.size());
+    qDebug("Size gameobjects prev to load: %i", gameObjects.size());
     for (int i = 0; i < array.size(); i++)
     {
         GenerateEmptyGameObject();
@@ -197,15 +199,16 @@ void SceneWidget::ReadJsonScene()
                 value.toObject().value("S_strokeColorB").toInt(),
                 value.toObject().value("S_strokeColorA").toInt());
 
-        gameObjects.push_back(go);
         GameObjectChangedName(go->GetId(), go->name);
     }
     update();
+    qDebug("Size gameobjects post to load: %i", gameObjects.size());
 }
 
 void SceneWidget::WriteJsonScene()
 {
     QJsonArray array;
+    qDebug("Size at write: %i", gameObjects.size());
     for (std::list<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); it++)
     {
         QJsonObject go;
