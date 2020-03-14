@@ -56,27 +56,30 @@ Inspector::~Inspector()
 
 void Inspector::OnEntityChanged(GameObject* go)
 {
-    //shape->show();
-    //material->show();
-    selectedGO = go;
-    // ===================== Load info =====================
-        // Transform
-    uiTransform->spinBox_TranslationX->setValue(go->transform.position[0]);
-    uiTransform->spinBox_TranslationY->setValue(go->transform.position[1]);
-    uiTransform->spinBox_TranslationZ->setValue(go->transform.position[2]);
-    uiTransform->spinBox_RotationX->setValue(go->transform.angle);
-    uiTransform->spinBox_ScaleX->setValue(go->transform.scale[0]);
-    uiTransform->spinBox_ScaleY->setValue(go->transform.scale[1]);
+    if (go != nullptr)
+    {
+        //shape->show();
+        //material->show();
+        selectedGO = go;
+        // ===================== Load info =====================
+            // Transform
+        uiTransform->spinBox_TranslationX->setValue(go->transform.position[0]);
+        uiTransform->spinBox_TranslationY->setValue(go->transform.position[1]);
+        uiTransform->spinBox_TranslationZ->setValue(go->transform.position[2]);
+        uiTransform->spinBox_RotationX->setValue(go->transform.angle);
+        uiTransform->spinBox_ScaleX->setValue(go->transform.scale[0]);
+        uiTransform->spinBox_ScaleY->setValue(go->transform.scale[1]);
 
-        // Shape
-    uiShape->shapeBoxType->setCurrentIndex(go->sprite.GetTypeIndex());
+            // Shape
+        uiShape->shapeBoxType->setCurrentIndex(go->sprite.GetTypeIndex());
 
-        // Material
-    uiMaterial->spinBoxThickness->setValue(go->sprite.strokeThickness);
-    uiMaterial->comboBoxStyle->setCurrentIndex(go->sprite.GetStrokeTypeIndex());
+            // Material
+        uiMaterial->spinBoxThickness->setValue(go->sprite.strokeThickness);
+        uiMaterial->comboBoxStyle->setCurrentIndex(go->sprite.GetStrokeTypeIndex());
 
-        // Name (Transform)
-    uiTransform->lineEditName->setText(go->name);
+            // Name (Transform)
+        uiTransform->lineEditName->setText(go->name);
+    }
 }
 
 void Inspector::on_spinBox_PX_changed(double num)
