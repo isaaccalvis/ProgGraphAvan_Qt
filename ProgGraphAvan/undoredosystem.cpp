@@ -98,9 +98,9 @@ void UndoRedoSystem::GoBack()
 
         int rgba[4];
         recoveryBucket[actualIndex]->copy_gameObject.sprite.fillColor.getRgb(&rgba[0],&rgba[1],&rgba[2],&rgba[3]);
-        recoveryBucket[actualIndex+1]->copy_gameObject.sprite.fillColor.setRgb(rgba[0],rgba[1],rgba[2],rgba[3]);
+        recoveryBucket[actualIndex+1]->original_gameObject->sprite.fillColor.setRgb(rgba[0],rgba[1],rgba[2],rgba[3]);
         recoveryBucket[actualIndex]->copy_gameObject.sprite.strokeColor.getRgb(&rgba[0],&rgba[1],&rgba[2],&rgba[3]);
-        recoveryBucket[actualIndex+1]->copy_gameObject.sprite.strokeColor.setRgb(rgba[0],rgba[1],rgba[2],rgba[3]);
+        recoveryBucket[actualIndex+1]->original_gameObject->sprite.strokeColor.setRgb(rgba[0],rgba[1],rgba[2],rgba[3]);
     }
     else    // Have been removed
     {
@@ -148,30 +148,30 @@ int UndoRedoSystem::FindPlace()
 
 void UndoRedoSystem::PrintBucket()
 {
-    //qDebug("==== OpenBucket ====");
-    //for (int i = 0; i < recoveryBucket.size(); i++)
-    //{
-    //qDebug("Index = %i, Name: %s, Id: %i, TransformX: %.2f, TransformY: %.2f, TransformZ = %.2f, Angle: %.2f, ScaleX: %.2f, ScaleY: %.2f, Shape = %i, Stroke = %i S_Thickness %i",
-    //       i,
-    //       recoveryBucket[i]->copy_gameObject.name.toStdString().c_str(),
-    //       recoveryBucket[i]->copy_gameObject.GetId(),
-    //       recoveryBucket[i]->copy_gameObject.transform.position[0],
-    //       recoveryBucket[i]->copy_gameObject.transform.position[1],
-    //       recoveryBucket[i]->copy_gameObject.transform.position[2],
-    //       recoveryBucket[i]->copy_gameObject.transform.angle,
-    //       recoveryBucket[i]->copy_gameObject.transform.scale[0],
-    //       recoveryBucket[i]->copy_gameObject.transform.scale[1],
-    //       recoveryBucket[i]->copy_gameObject.sprite.GetTypeIndex(),
-    //       recoveryBucket[i]->copy_gameObject.sprite.GetStrokeTypeIndex(),
-    //       recoveryBucket[i]->copy_gameObject.sprite.strokeThickness
-    //    );
-    //int rgba[4];
-    //int rgba2[4];
-    //recoveryBucket[i]->copy_gameObject.sprite.fillColor.getRgb(&rgba[0],&rgba[1],&rgba[2],&rgba[3]);
-    //recoveryBucket[i]->copy_gameObject.sprite.strokeColor.getRgb(&rgba2[0],&rgba2[1],&rgba2[2],&rgba2[3]);
-    //
-    //qDebug("Fill R: %i, G: %i, B: %i, A: %i :::: Stroke R: %i, G: %i, B: %i, A: %i",
-    //       rgba[0],rgba[1],rgba[2],rgba[3], rgba2[0],rgba2[1],rgba2[2],rgba2[3]);
-    //}
-    //qDebug("==== CloseBucket ====");
+    qDebug("==== OpenBucket ====");
+    for (int i = 0; i < recoveryBucket.size(); i++)
+    {
+    qDebug("Index = %i, Name: %s, Id: %i, TransformX: %.2f, TransformY: %.2f, TransformZ = %.2f, Angle: %.2f, ScaleX: %.2f, ScaleY: %.2f, Shape = %i, Stroke = %i S_Thickness %i",
+           i,
+           recoveryBucket[i]->copy_gameObject.name.toStdString().c_str(),
+           recoveryBucket[i]->copy_gameObject.GetId(),
+           recoveryBucket[i]->copy_gameObject.transform.position[0],
+           recoveryBucket[i]->copy_gameObject.transform.position[1],
+           recoveryBucket[i]->copy_gameObject.transform.position[2],
+           recoveryBucket[i]->copy_gameObject.transform.angle,
+           recoveryBucket[i]->copy_gameObject.transform.scale[0],
+           recoveryBucket[i]->copy_gameObject.transform.scale[1],
+           recoveryBucket[i]->copy_gameObject.sprite.GetTypeIndex(),
+           recoveryBucket[i]->copy_gameObject.sprite.GetStrokeTypeIndex(),
+           recoveryBucket[i]->copy_gameObject.sprite.strokeThickness
+        );
+    int rgba[4];
+    int rgba2[4];
+    recoveryBucket[i]->copy_gameObject.sprite.fillColor.getRgb(&rgba[0],&rgba[1],&rgba[2],&rgba[3]);
+    recoveryBucket[i]->copy_gameObject.sprite.strokeColor.getRgb(&rgba2[0],&rgba2[1],&rgba2[2],&rgba2[3]);
+
+    qDebug("\t Fill R: %i, G: %i, B: %i, A: %i :::: Stroke R: %i, G: %i, B: %i, A: %i",
+           rgba[0],rgba[1],rgba[2],rgba[3], rgba2[0],rgba2[1],rgba2[2],rgba2[3]);
+    }
+    qDebug("==== CloseBucket ====");
 }

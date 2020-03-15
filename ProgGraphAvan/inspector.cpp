@@ -35,18 +35,18 @@ Inspector::Inspector(QWidget* parent) : QWidget(parent)
     setLayout(layout);
 
     // Connect
-    connect(uiTransform->spinBox_TranslationX,  SIGNAL(valueChanged(double)),       this, SLOT(on_spinBox_PX_changed(double)));
-    connect(uiTransform->spinBox_TranslationY,  SIGNAL(valueChanged(double)),       this, SLOT(on_spinBox_PY_changed(double)));
-    connect(uiTransform->spinBox_TranslationZ,  SIGNAL(valueChanged(double)),       this, SLOT(on_spinBox_PZ_changed(double)));
-    connect(uiTransform->spinBox_RotationX,     SIGNAL(valueChanged(double)),       this, SLOT(on_spinBox_Angle_changed(double)));
-    connect(uiTransform->spinBox_ScaleX,        SIGNAL(valueChanged(double)),       this, SLOT(on_spinBox_SX_changed(double)));
-    connect(uiTransform->spinBox_ScaleY,        SIGNAL(valueChanged(double)),       this, SLOT(on_spinBox_SY_changed(double)));
-    connect(uiShape->shapeBoxType,              SIGNAL(currentIndexChanged(int)),   this, SLOT(on_comboBox_Shape_changed(int)));
-    connect(uiMaterial->spinBoxThickness,       SIGNAL(valueChanged(int)),          this, SLOT(on_spinBox_StrokeThickness_changed(int)));
-    connect(uiMaterial->comboBoxStyle,          SIGNAL(currentIndexChanged(int)),   this, SLOT(on_comboBox_StrokeStyle_changed(int)));
-    connect(uiMaterial->pushButtonFillColor,    SIGNAL(clicked()),                  this, SLOT(on_pushButton_FillColor_changed()));
-    connect(uiMaterial->pushButtonStrokeColor,  SIGNAL(clicked()),                  this, SLOT(on_pushButton_StrokeColor_changed()));
-    connect(uiTransform->lineEditName,          SIGNAL(editingFinished()),          this, SLOT(on_name_changed()));
+    connect(uiTransform->spinBox_TranslationX,  SIGNAL(editingFinished()),          this,   SLOT(on_spinBox_PX_changed()));
+    connect(uiTransform->spinBox_TranslationY,  SIGNAL(editingFinished()),          this,   SLOT(on_spinBox_PY_changed()));
+    connect(uiTransform->spinBox_TranslationZ,  SIGNAL(editingFinished()),          this,   SLOT(on_spinBox_PZ_changed()));
+    connect(uiTransform->spinBox_RotationX,     SIGNAL(editingFinished()),          this,   SLOT(on_spinBox_Angle_changed()));
+    connect(uiTransform->spinBox_ScaleX,        SIGNAL(editingFinished()),          this,   SLOT(on_spinBox_SX_changed()));
+    connect(uiTransform->spinBox_ScaleY,        SIGNAL(editingFinished()),          this,   SLOT(on_spinBox_SY_changed()));
+    connect(uiShape->shapeBoxType,              SIGNAL(currentIndexChanged(int)),   this,   SLOT(on_comboBox_Shape_changed(int)));
+    connect(uiMaterial->spinBoxThickness,       SIGNAL(editingFinished()),          this,   SLOT(on_spinBox_StrokeThickness_changed()));
+    connect(uiMaterial->comboBoxStyle,          SIGNAL(currentIndexChanged(int)),   this,   SLOT(on_comboBox_StrokeStyle_changed(int)));
+    connect(uiMaterial->pushButtonFillColor,    SIGNAL(clicked()),                  this,   SLOT(on_pushButton_FillColor_changed()));
+    connect(uiMaterial->pushButtonStrokeColor,  SIGNAL(clicked()),                  this,   SLOT(on_pushButton_StrokeColor_changed()));
+    connect(uiTransform->lineEditName,          SIGNAL(editingFinished()),          this,   SLOT(on_name_changed()));
 }
 
 Inspector::~Inspector()
@@ -75,63 +75,62 @@ void Inspector::OnEntityChanged(GameObject* go, bool blockUpdate)
     this->blockUpdate = false;
 }
 
-void Inspector::on_spinBox_PX_changed(double num)
+void Inspector::on_spinBox_PX_changed()
 {
-    qDebug("Bool: %i", blockUpdate);
     if (selectedGO != nullptr && !blockUpdate)
     {
         GameObjectModified(selectedGO);
-        selectedGO->transform.position[0] = num;
+        selectedGO->transform.position[0] = uiTransform->spinBox_TranslationX->value();
         UpdateScene();
     }
 }
 
-void Inspector::on_spinBox_PY_changed(double num)
+void Inspector::on_spinBox_PY_changed()
 {
     if (selectedGO != nullptr && !blockUpdate)
     {
         GameObjectModified(selectedGO);
-        selectedGO->transform.position[1] = num;
+        selectedGO->transform.position[1] = uiTransform->spinBox_TranslationY->value();
         UpdateScene();
     }
 }
 
-void Inspector::on_spinBox_PZ_changed(double num)
+void Inspector::on_spinBox_PZ_changed()
 {
     if (selectedGO != nullptr && !blockUpdate)
     {
         GameObjectModified(selectedGO);
-        selectedGO->transform.position[2] = num;
+        selectedGO->transform.position[2] = uiTransform->spinBox_TranslationZ->value();
         UpdateScene();
     }
 }
 
-void Inspector::on_spinBox_Angle_changed(double num)
+void Inspector::on_spinBox_Angle_changed()
 {
     if (selectedGO != nullptr && !blockUpdate)
     {
         GameObjectModified(selectedGO);
-        selectedGO->transform.angle = num;
+        selectedGO->transform.angle = uiTransform->spinBox_RotationX->value();
         UpdateScene();
     }
 }
 
-void Inspector::on_spinBox_SX_changed(double num)
+void Inspector::on_spinBox_SX_changed()
 {
     if (selectedGO != nullptr && !blockUpdate)
     {
         GameObjectModified(selectedGO);
-        selectedGO->transform.scale[0] = num;
+        selectedGO->transform.scale[0] = uiTransform->spinBox_ScaleX->value();
         UpdateScene();
     }
 }
 
-void Inspector::on_spinBox_SY_changed(double num)
+void Inspector::on_spinBox_SY_changed()
 {
     if (selectedGO != nullptr && !blockUpdate)
     {
         GameObjectModified(selectedGO);
-        selectedGO->transform.scale[1] = num;
+        selectedGO->transform.scale[1] = uiTransform->spinBox_ScaleY->value();
         UpdateScene();
     }
 }
@@ -146,12 +145,12 @@ void Inspector::on_comboBox_Shape_changed(int num)
     }
 }
 
-void Inspector::on_spinBox_StrokeThickness_changed(int num)
+void Inspector::on_spinBox_StrokeThickness_changed()
 {
     if (selectedGO != nullptr && !blockUpdate)
     {
         GameObjectModified(selectedGO);
-        selectedGO->sprite.strokeThickness = num;
+        selectedGO->sprite.strokeThickness = uiMaterial->spinBoxThickness->value();
         UpdateScene();
     }
 }
