@@ -76,6 +76,12 @@ void UndoRedoSystem::AddGameObject(GameObject* go)
 
 void UndoRedoSystem::GoBack()
 {
+    if (!lastWasBack)
+    {
+        lastWasBack = true;
+        if (actualIndex > 0)
+            actualIndex--;
+    }
     if (recoveryBucket[actualIndex]->original_gameObject != nullptr)    // Not have been removed
     {
         recoveryBucket[actualIndex]->original_gameObject->name = recoveryBucket[actualIndex]->copy_gameObject.name;
@@ -101,6 +107,9 @@ void UndoRedoSystem::GoBack()
     {
 
     }
+
+    recoveryBucket[actualIndex]->wentBack = true;
+
     scene->update();
     if (scene->wInspector != nullptr)
         scene->wInspector->OnEntityChanged(recoveryBucket[actualIndex]->original_gameObject, true);
@@ -111,7 +120,61 @@ void UndoRedoSystem::GoBack()
 
 void UndoRedoSystem::GoFront()
 {
+    if (lastWasBack)
+    {
+        if (actualIndex == 0)
+        {
+            if (actualIndex < BUCKET_SIZE-1)
+                actualIndex += 1;
+            else
+                return;
+        }
+        else
+        {
+            if (actualIndex < BUCKET_SIZE-2)
+                actualIndex += 2;
+            else
+                return;
+        }
+    }
+    else
+    {
+        if (actualIndex < BUCKET_SIZE-1)
+            actualIndex += 1;
+        else
+            return;
+    }
+    lastWasBack = false;
 
+    if (recoveryBucket[actualIndex]->original_gameObject != nullptr && recoveryBucket[actualIndex]->wentBack)    // Not have been removed
+    {
+        recoveryBucket[actualIndex]->original_gameObject->name = recoveryBucket[actualIndex]->copy_gameObject.name;
+        recoveryBucket[actualIndex]->original_gameObject->SetId(recoveryBucket[actualIndex]->copy_gameObject.GetId());
+        recoveryBucket[actualIndex]->original_gameObject->transform.position[0] =   recoveryBucket[actualIndex]->copy_gameObject.transform.position[0];
+        recoveryBucket[actualIndex]->original_gameObject->transform.position[1] =   recoveryBucket[actualIndex]->copy_gameObject.transform.position[1];
+        recoveryBucket[actualIndex]->original_gameObject->transform.position[2] =   recoveryBucket[actualIndex]->copy_gameObject.transform.position[2];
+        recoveryBucket[actualIndex]->original_gameObject->transform.angle =         recoveryBucket[actualIndex]->copy_gameObject.transform.angle;
+        recoveryBucket[actualIndex]->original_gameObject->transform.scale[0] =      recoveryBucket[actualIndex]->copy_gameObject.transform.scale[0];
+        recoveryBucket[actualIndex]->original_gameObject->transform.scale[1] =      recoveryBucket[actualIndex]->copy_gameObject.transform.scale[1];
+
+        recoveryBucket[actualIndex]->original_gameObject->sprite.SetTypeIndex(recoveryBucket[actualIndex]->copy_gameObject.sprite.GetTypeIndex());
+        recoveryBucket[actualIndex]->original_gameObject->sprite.SettrokeTypeIndex(recoveryBucket[actualIndex]->copy_gameObject.sprite.GetStrokeTypeIndex());
+        recoveryBucket[actualIndex]->original_gameObject->sprite.strokeThickness = recoveryBucket[actualIndex]->copy_gameObject.sprite.strokeThickness;
+
+        int rgba[4];
+        recoveryBucket[actualIndex]->copy_gameObject.sprite.fillColor.getRgb(&rgba[0],&rgba[1],&rgba[2],&rgba[3]);
+        recoveryBucket[actualIndex]->original_gameObject->sprite.fillColor.setRgb(rgba[0],rgba[1],rgba[2],rgba[3]);
+        recoveryBucket[actualIndex]->copy_gameObject.sprite.strokeColor.getRgb(&rgba[0],&rgba[1],&rgba[2],&rgba[3]);
+        recoveryBucket[actualIndex]->original_gameObject->sprite.strokeColor.setRgb(rgba[0],rgba[1],rgba[2],rgba[3]);
+    }
+    else    // Have been removed
+    {
+
+    }
+
+    scene->update();
+    if (scene->wInspector != nullptr)
+        scene->wInspector->OnEntityChanged(recoveryBucket[actualIndex]->original_gameObject, true);
 }
 
 int UndoRedoSystem::FindPlace()

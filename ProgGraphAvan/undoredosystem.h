@@ -22,6 +22,7 @@ public:
 
 public:
     bool isUsed = false;
+    bool wentBack = false;
 };
 
 class UndoRedoSystem
@@ -42,6 +43,7 @@ private:
 private:
     std::vector<RecoveryGameObject*> recoveryBucket;
     unsigned int actualIndex = 0;
+    bool lastWasBack = true;
 
 public:
     SceneWidget* scene = nullptr;
