@@ -85,7 +85,7 @@ void UndoRedoSystem::GoBack()
         }
     }
 
-    if (!lastWasBack || actualIndex == (BUCKET_SIZE -1) || actualIndex < getLastUsed)
+    if (!lastWasBack || actualIndex == (BUCKET_SIZE -1) || (actualIndex < getLastUsed && getLastUsed != -1))
     {
         recoveryBucket[actualIndex]->wentBack = true;
         lastWasBack = true;
