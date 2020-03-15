@@ -76,7 +76,16 @@ void UndoRedoSystem::AddGameObject(GameObject* go)
 
 void UndoRedoSystem::GoBack()
 {
-    if (!lastWasBack || actualIndex == (BUCKET_SIZE -1))
+    int getLastUsed = -1;
+    for (int i = 0; i < BUCKET_SIZE; i++)
+    {
+        if (recoveryBucket[i]->isUsed == false)
+        {
+            getLastUsed = i;
+        }
+    }
+
+    if (!lastWasBack || actualIndex == (BUCKET_SIZE -1) || actualIndex < getLastUsed)
     {
         recoveryBucket[actualIndex]->wentBack = true;
         lastWasBack = true;
@@ -104,6 +113,10 @@ void UndoRedoSystem::GoBack()
         recoveryBucket[actualIndex]->original_gameObject->sprite.fillColor.setRgb(rgba[0],rgba[1],rgba[2],rgba[3]);
         recoveryBucket[actualIndex]->copy_gameObject.sprite.strokeColor.getRgb(&rgba[0],&rgba[1],&rgba[2],&rgba[3]);
         recoveryBucket[actualIndex]->original_gameObject->sprite.strokeColor.setRgb(rgba[0],rgba[1],rgba[2],rgba[3]);
+
+        scene->update();
+        if (scene->wInspector != nullptr)
+            scene->wInspector->OnEntityChanged(recoveryBucket[actualIndex]->original_gameObject, true);
     }
     else    // Have been removed
     {
@@ -112,9 +125,7 @@ void UndoRedoSystem::GoBack()
 
     recoveryBucket[actualIndex]->wentBack = true;
 
-    scene->update();
-    if (scene->wInspector != nullptr)
-        scene->wInspector->OnEntityChanged(recoveryBucket[actualIndex]->original_gameObject, true);
+
 
     if (actualIndex > 0)
         actualIndex--;
@@ -122,6 +133,7 @@ void UndoRedoSystem::GoBack()
 
 void UndoRedoSystem::GoFront()
 {
+    int lastPosition = actualIndex;
     if (lastWasBack)
     {
         if (actualIndex == 0)
@@ -175,7 +187,7 @@ void UndoRedoSystem::GoFront()
     }
     else    // Have been removed
     {
-
+        actualIndex = lastPosition;
     }
 }
 

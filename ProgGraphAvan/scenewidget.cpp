@@ -35,6 +35,7 @@ void SceneWidget::CreateGameObject(int num)
 {
     GameObject* newGO = new GameObject(num);
     gameObjects.push_back(newGO);
+    undoRedoSystem->AddGameObject(newGO);
     update();
 }
 
@@ -281,7 +282,6 @@ void SceneWidget::WriteJsonScene()
 void SceneWidget::GameObjectModified(GameObject* go)
 {
     undoRedoSystem->AddGameObject(go);
-    qDebug("GameObjectModified");
 }
 
 void SceneWidget::OnUndo()
