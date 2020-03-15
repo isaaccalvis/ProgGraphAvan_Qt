@@ -145,12 +145,16 @@ void SceneWidget::paintEvent(QPaintEvent* event)
 
         painter.setBrush(brush);
         painter.setPen(pen);
+        QTransform transform = painter.transform();
+        transform.translate(goOrdered[i]->transform.position[0],goOrdered[i]->transform.position[1]);
+        painter.setTransform(transform);
+        painter.rotate(goOrdered[i]->transform.angle);
 
         int x = goOrdered[i]->transform.position[0];
         int y = goOrdered[i]->transform.position[1];
         int w = goOrdered[i]->transform.scale[0];
         int h = goOrdered[i]->transform.scale[1];
-        QRect rect(x,y,w,h);
+        QRect rect(0,0,w,h);
         switch(goOrdered[i]->sprite.type)
         {
         case SHAPE_TYPE::CIRCLE:
