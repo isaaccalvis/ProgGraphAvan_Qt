@@ -76,13 +76,10 @@ void UndoRedoSystem::AddGameObject(GameObject* go)
 
 void UndoRedoSystem::GoBack()
 {
-    qDebug("Prev Actual Index: %i", actualIndex);
-    qDebug("Post Actual Index: %i", actualIndex);
     if (recoveryBucket[actualIndex]->original_gameObject != nullptr)    // Not have been removed
     {
         recoveryBucket[actualIndex]->original_gameObject->name = recoveryBucket[actualIndex]->copy_gameObject.name;
         recoveryBucket[actualIndex]->original_gameObject->SetId(recoveryBucket[actualIndex]->copy_gameObject.GetId());
-
         recoveryBucket[actualIndex]->original_gameObject->transform.position[0] =   recoveryBucket[actualIndex]->copy_gameObject.transform.position[0];
         recoveryBucket[actualIndex]->original_gameObject->transform.position[1] =   recoveryBucket[actualIndex]->copy_gameObject.transform.position[1];
         recoveryBucket[actualIndex]->original_gameObject->transform.position[2] =   recoveryBucket[actualIndex]->copy_gameObject.transform.position[2];

@@ -71,6 +71,7 @@ void Inspector::OnEntityChanged(GameObject* go, bool blockUpdate)
         uiMaterial->spinBoxThickness->setValue(go->sprite.strokeThickness);
         uiMaterial->comboBoxStyle->setCurrentIndex(go->sprite.GetStrokeTypeIndex());
         uiTransform->lineEditName->setText(go->name);
+        GameObjectChangedName(selectedGO->GetId(),selectedGO->name);
     }
     this->blockUpdate = false;
 }
