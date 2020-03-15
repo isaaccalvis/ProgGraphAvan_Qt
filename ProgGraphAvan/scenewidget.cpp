@@ -154,7 +154,7 @@ void SceneWidget::paintEvent(QPaintEvent* event)
         int y = goOrdered[i]->transform.position[1];
         int w = goOrdered[i]->transform.scale[0];
         int h = goOrdered[i]->transform.scale[1];
-        QRect rect(0,0,w,h);
+        QRect rect(-goOrdered[i]->transform.scale[0] / 2,-goOrdered[i]->transform.scale[1] / 2,w,h);
         switch(goOrdered[i]->sprite.type)
         {
         case SHAPE_TYPE::CIRCLE:

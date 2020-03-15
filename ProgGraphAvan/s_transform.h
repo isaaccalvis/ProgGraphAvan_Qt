@@ -8,7 +8,7 @@ public:
     S_Transform();
 
 public:
-    float position[3] = {0.,0.,0.};
+    float position[3] = {10.,10.,0.};
     float angle = 0.0f;
     float scale[2] = {10.,10.};
 };
