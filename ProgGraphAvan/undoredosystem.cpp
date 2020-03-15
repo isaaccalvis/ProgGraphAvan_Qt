@@ -1,4 +1,5 @@
 #include "undoredosystem.h"
+#include "scenewidget.h"
 
 // =================    Recovery GameObject class   =================
 
@@ -21,6 +22,16 @@ UndoRedoSystem::UndoRedoSystem()
     {
         recoveryBucket[i] = new RecoveryGameObject();
     }
+}
+
+UndoRedoSystem::UndoRedoSystem(SceneWidget* scene)
+{
+    recoveryBucket.resize(BUCKET_SIZE);
+    for (int i = 0; i < BUCKET_SIZE; i++)
+    {
+        recoveryBucket[i] = new RecoveryGameObject();
+    }
+    this->scene = scene;
 }
 
 UndoRedoSystem::~UndoRedoSystem()
@@ -93,7 +104,9 @@ void UndoRedoSystem::GoBack()
     {
 
     }
-
+    scene->update();
+    if (scene->wInspector != nullptr)
+        scene->wInspector->OnEntityChanged(recoveryBucket[actualIndex+1]->original_gameObject);
 }
 
 void UndoRedoSystem::GoFront()

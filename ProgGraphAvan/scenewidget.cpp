@@ -10,7 +10,7 @@
 SceneWidget::SceneWidget(QWidget* parent) : QWidget(parent)
 {
     setAutoFillBackground(true);
-    undoRedoSystem = new UndoRedoSystem();
+    undoRedoSystem = new UndoRedoSystem(this);
 }
 
 SceneWidget::~SceneWidget()

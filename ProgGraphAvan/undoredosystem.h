@@ -4,7 +4,11 @@
 #include <vector>
 #include "gameobject.h"
 
+#include "inspector.h"
+
 #define BUCKET_SIZE 5
+
+class SceneWidget;
 
 class RecoveryGameObject
 {
@@ -24,9 +28,9 @@ class UndoRedoSystem
 {
 public:
     UndoRedoSystem();
+    UndoRedoSystem(SceneWidget* scene);
     ~UndoRedoSystem();
 
-public:
     void AddGameObject(GameObject* go);
     void GoBack();
     void GoFront();
@@ -38,6 +42,9 @@ private:
 private:
     std::vector<RecoveryGameObject*> recoveryBucket;
     unsigned int actualIndex = 0;
+
+public:
+    SceneWidget* scene = nullptr;
 };
 
 #endif // UNDOREDOSYSTEM_H

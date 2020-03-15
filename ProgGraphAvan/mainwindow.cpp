@@ -30,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
     QBoxLayout* centralLayout = new QVBoxLayout;
     centralLayout->addWidget(scene);
     uiMainWindow->centralwidget->setLayout(centralLayout);
+    scene->wInspector = inspector;
 
     uiMainWindow->menuView->addAction(uiMainWindow->DockWindowProject->toggleViewAction());
     uiMainWindow->menuView->addAction(uiMainWindow->DockWindowHierarchy->toggleViewAction());

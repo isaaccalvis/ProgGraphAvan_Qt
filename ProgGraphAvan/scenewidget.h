@@ -33,6 +33,7 @@ public slots:
 
 public:
     UndoRedoSystem* undoRedoSystem = nullptr;
+    Inspector* wInspector = nullptr;
 
 private:
     void paintEvent(QPaintEvent* event) override;
