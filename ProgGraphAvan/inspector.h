@@ -27,7 +27,7 @@ signals:
     void GameObjectModified(GameObject* go);
 
 public slots:
-    void OnEntityChanged(GameObject* go);
+    void OnEntityChanged(GameObject* go, bool blockUpdate = false);
 
     // Input Slots
     void on_spinBox_PX_changed(double num);                 // Position
@@ -53,6 +53,8 @@ private:
     QWidget* material = nullptr;
 
     GameObject* selectedGO = nullptr;
+
+    bool blockUpdate = false;
 };
 
 #endif // INSPECTOR_H

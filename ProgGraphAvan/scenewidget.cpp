@@ -244,6 +244,7 @@ void SceneWidget::WriteJsonScene()
 void SceneWidget::GameObjectModified(GameObject* go)
 {
     undoRedoSystem->AddGameObject(go);
+    qDebug("GameObjectModified");
 }
 
 void SceneWidget::OnUndo()
