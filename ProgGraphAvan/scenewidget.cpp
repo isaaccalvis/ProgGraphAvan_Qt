@@ -6,6 +6,8 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QFile>
+#include <QInputDialog>
+#include <QMessageBox>
 
 SceneWidget::SceneWidget(QWidget* parent) : QWidget(parent)
 {
@@ -163,82 +165,113 @@ void SceneWidget::paintEvent(QPaintEvent* event)
 
 void SceneWidget::ReadJsonScene()
 {
-    QString val;
-    QFile readFile;
-    readFile.setFileName("Proba.json");
-    readFile.open(QIODevice::ReadOnly | QIODevice::Text);
-    val = readFile.readAll();
-    readFile.close();
-
-    QJsonDocument doc = QJsonDocument::fromJson(val.toUtf8());
-    QJsonArray array(doc.array());
-    for (int i = 0; i < array.size(); i++)
+    bool ok;
+    QString text = QInputDialog::getText(0, "Input dialog",
+                                         "File Name (add extension!):", QLineEdit::Normal,
+                                         "", &ok);
+    if (ok && !text.isEmpty())
     {
-        GenerateEmptyGameObject();
-        GameObject* go = gameObjects.back();
-        QJsonValue value(array[i]);
+        QString val;
+        QFile readFile;
+        readFile.setFileName(text);
+        if (!readFile.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            QMessageBox message;
+            message.setText("Couldn't find this file");
+            message.exec();
+        }
+        val = readFile.readAll();
+        readFile.close();
 
-        go->name = QString(value.toObject().value("Name").toString());
-        go->transform.position[0] = value.toObject().value("T_PosX").toDouble();
-        go->transform.position[1] = value.toObject().value("T_PosY").toDouble();
-        go->transform.position[2] = value.toObject().value("T_PosZ").toDouble();
-        go->transform.angle = value.toObject().value("Angle").toDouble();
-        go->transform.scale[0] = value.toObject().value("T_ScaleX").toDouble();
-        go->transform.scale[1] = value.toObject().value("T_ScaleY").toDouble();
+        QJsonDocument doc = QJsonDocument::fromJson(val.toUtf8());
+        QJsonArray array(doc.array());
+        for (int i = 0; i < array.size(); i++)
+        {
+            GenerateEmptyGameObject();
+            GameObject* go = gameObjects.back();
+            QJsonValue value(array[i]);
 
-        go->sprite.SetTypeIndex(value.toObject().value("S_Shape").toInt());
-        go->sprite.strokeThickness = value.toObject().value("S_strokeThickness").toInt();
-        go->sprite.SettrokeTypeIndex(value.toObject().value("S_strokeStyle").toInt());
+            go->name = QString(value.toObject().value("Name").toString());
+            go->transform.position[0] = value.toObject().value("T_PosX").toDouble();
+            go->transform.position[1] = value.toObject().value("T_PosY").toDouble();
+            go->transform.position[2] = value.toObject().value("T_PosZ").toDouble();
+            go->transform.angle = value.toObject().value("Angle").toDouble();
+            go->transform.scale[0] = value.toObject().value("T_ScaleX").toDouble();
+            go->transform.scale[1] = value.toObject().value("T_ScaleY").toDouble();
 
-        go->sprite.fillColor = QColor(value.toObject().value("S_fillColorR").toInt(),
-                value.toObject().value("S_fillColorG").toInt(),
-                value.toObject().value("S_fillColorB").toInt(),
-                value.toObject().value("S_fillColorA").toInt());
-        go->sprite.strokeColor = QColor(value.toObject().value("S_strokeColorR").toInt(),
-                value.toObject().value("S_strokeColorG").toInt(),
-                value.toObject().value("S_strokeColorB").toInt(),
-                value.toObject().value("S_strokeColorA").toInt());
+            go->sprite.SetTypeIndex(value.toObject().value("S_Shape").toInt());
+            go->sprite.strokeThickness = value.toObject().value("S_strokeThickness").toInt();
+            go->sprite.SettrokeTypeIndex(value.toObject().value("S_strokeStyle").toInt());
 
-        GameObjectChangedName(go->GetId(), go->name);
+            go->sprite.fillColor = QColor(value.toObject().value("S_fillColorR").toInt(),
+                    value.toObject().value("S_fillColorG").toInt(),
+                    value.toObject().value("S_fillColorB").toInt(),
+                    value.toObject().value("S_fillColorA").toInt());
+            go->sprite.strokeColor = QColor(value.toObject().value("S_strokeColorR").toInt(),
+                    value.toObject().value("S_strokeColorG").toInt(),
+                    value.toObject().value("S_strokeColorB").toInt(),
+                    value.toObject().value("S_strokeColorA").toInt());
+
+            GameObjectChangedName(go->GetId(), go->name);
+        }
+        update();
     }
-    update();
+    else
+    {
+        QMessageBox message;
+        message.setText("Name is empty or a problem occurred at read name file");
+        message.exec();
+    }
 }
 
 void SceneWidget::WriteJsonScene()
 {
-    QJsonArray array;
-    for (std::list<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); it++)
+    bool ok;
+    QString text = QInputDialog::getText(0, "Input dialog",
+                                         "File Name (add extension!):", QLineEdit::Normal,
+                                         "", &ok);
+    if (ok && !text.isEmpty())
     {
-        QJsonObject go;
-        go.insert("Name", (*it)->name);
-        go.insert("T_PosX", (*it)->transform.position[0]);
-        go.insert("T_PosY", (*it)->transform.position[1]);
-        go.insert("T_PosZ", (*it)->transform.position[2]);
-        go.insert("T_Angle", (*it)->transform.angle);
-        go.insert("T_ScaleX", (*it)->transform.scale[0]);
-        go.insert("T_ScaleY", (*it)->transform.scale[1]);
-        go.insert("S_Shape", (*it)->sprite.GetTypeIndex());
-        int rgba[4];
-        go.insert("S_strokeThickness", (*it)->sprite.strokeThickness);
-        go.insert("S_strokeStyle", (*it)->sprite.strokeStyle);
-        (*it)->sprite.strokeColor.getRgb(&rgba[0],&rgba[1],&rgba[2],&rgba[3]);
-        go.insert("S_strokeColorR", rgba[0]);
-        go.insert("S_strokeColorG", rgba[1]);
-        go.insert("S_strokeColorB", rgba[2]);
-        go.insert("S_strokeColorA", rgba[3]);
-        (*it)->sprite.fillColor.getRgb(&rgba[0],&rgba[1],&rgba[2],&rgba[3]);
-        go.insert("S_fillColorR", rgba[0]);
-        go.insert("S_fillColorG", rgba[1]);
-        go.insert("S_fillColorB", rgba[2]);
-        go.insert("S_fillColorA", rgba[3]);
+        QJsonArray array;
+        for (std::list<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); it++)
+        {
+            QJsonObject go;
+            go.insert("Name", (*it)->name);
+            go.insert("T_PosX", (*it)->transform.position[0]);
+            go.insert("T_PosY", (*it)->transform.position[1]);
+            go.insert("T_PosZ", (*it)->transform.position[2]);
+            go.insert("T_Angle", (*it)->transform.angle);
+            go.insert("T_ScaleX", (*it)->transform.scale[0]);
+            go.insert("T_ScaleY", (*it)->transform.scale[1]);
+            go.insert("S_Shape", (*it)->sprite.GetTypeIndex());
+            int rgba[4];
+            go.insert("S_strokeThickness", (*it)->sprite.strokeThickness);
+            go.insert("S_strokeStyle", (*it)->sprite.strokeStyle);
+            (*it)->sprite.strokeColor.getRgb(&rgba[0],&rgba[1],&rgba[2],&rgba[3]);
+            go.insert("S_strokeColorR", rgba[0]);
+            go.insert("S_strokeColorG", rgba[1]);
+            go.insert("S_strokeColorB", rgba[2]);
+            go.insert("S_strokeColorA", rgba[3]);
+            (*it)->sprite.fillColor.getRgb(&rgba[0],&rgba[1],&rgba[2],&rgba[3]);
+            go.insert("S_fillColorR", rgba[0]);
+            go.insert("S_fillColorG", rgba[1]);
+            go.insert("S_fillColorB", rgba[2]);
+            go.insert("S_fillColorA", rgba[3]);
 
-        array.push_back(go);
+            array.push_back(go);
+        }
+        QJsonDocument doc(array);
+        QFile saveFile(text);
+        saveFile.open(QIODevice::WriteOnly);
+        saveFile.write(doc.toJson());
+        saveFile.close();
     }
-    QJsonDocument doc(array);
-    QFile saveFile("Proba.json");
-    saveFile.open(QIODevice::WriteOnly);
-    saveFile.write(doc.toJson());
-    saveFile.close();
+    else
+    {
+        QMessageBox message;
+        message.setText("Name is empty or a problem occurred at read name file");
+        message.exec();
+    }
 }
 
 void SceneWidget::GameObjectModified(GameObject* go)
