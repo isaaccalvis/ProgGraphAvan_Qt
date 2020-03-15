@@ -34,6 +34,10 @@ Inspector::Inspector(QWidget* parent) : QWidget(parent)
 
     setLayout(layout);
 
+    transform->hide();
+    shape->hide();
+    material->hide();
+
     // Connect
     connect(uiTransform->spinBox_TranslationX,  SIGNAL(editingFinished()),          this,   SLOT(on_spinBox_PX_changed()));
     connect(uiTransform->spinBox_TranslationY,  SIGNAL(editingFinished()),          this,   SLOT(on_spinBox_PY_changed()));
@@ -72,6 +76,16 @@ void Inspector::OnEntityChanged(GameObject* go, bool blockUpdate)
         uiMaterial->comboBoxStyle->setCurrentIndex(go->sprite.GetStrokeTypeIndex());
         uiTransform->lineEditName->setText(go->name);
         GameObjectChangedName(selectedGO->GetId(),selectedGO->name);
+
+        transform->show();
+        shape->show();
+        material->show();
+    }
+    else
+    {
+        transform->hide();
+        shape->hide();
+        material->hide();
     }
     this->blockUpdate = false;
 }
