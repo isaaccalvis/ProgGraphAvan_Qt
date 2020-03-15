@@ -168,15 +168,15 @@ void UndoRedoSystem::GoFront()
         recoveryBucket[actualIndex]->original_gameObject->sprite.fillColor.setRgb(rgba[0],rgba[1],rgba[2],rgba[3]);
         recoveryBucket[actualIndex]->copy_gameObject.sprite.strokeColor.getRgb(&rgba[0],&rgba[1],&rgba[2],&rgba[3]);
         recoveryBucket[actualIndex]->original_gameObject->sprite.strokeColor.setRgb(rgba[0],rgba[1],rgba[2],rgba[3]);
+
+        scene->update();
+        if (scene->wInspector != nullptr)
+            scene->wInspector->OnEntityChanged(recoveryBucket[actualIndex]->original_gameObject, true);
     }
     else    // Have been removed
     {
 
     }
-
-    scene->update();
-    if (scene->wInspector != nullptr)
-        scene->wInspector->OnEntityChanged(recoveryBucket[actualIndex]->original_gameObject, true);
 }
 
 int UndoRedoSystem::FindPlace()
