@@ -82,9 +82,9 @@ void Inspector::on_spinBox_PX_changed()
         return; // If we dont modify the object don't update it
     if (selectedGO != nullptr && !blockUpdate)
     {
-        GameObjectModified(selectedGO);
         selectedGO->transform.position[0] = uiTransform->spinBox_TranslationX->value();
         UpdateScene();
+        GameObjectModified(selectedGO);
     }
 }
 
@@ -94,9 +94,9 @@ void Inspector::on_spinBox_PY_changed()
         return; // If we dont modify the object don't update it
     if (selectedGO != nullptr && !blockUpdate)
     {
-        GameObjectModified(selectedGO);
         selectedGO->transform.position[1] = uiTransform->spinBox_TranslationY->value();
         UpdateScene();
+        GameObjectModified(selectedGO);
     }
 }
 
@@ -106,9 +106,9 @@ void Inspector::on_spinBox_PZ_changed()
         return; // If we dont modify the object don't update it
     if (selectedGO != nullptr && !blockUpdate)
     {
-        GameObjectModified(selectedGO);
         selectedGO->transform.position[2] = uiTransform->spinBox_TranslationZ->value();
         UpdateScene();
+        GameObjectModified(selectedGO);
     }
 }
 
@@ -118,9 +118,9 @@ void Inspector::on_spinBox_Angle_changed()
         return; // If we dont modify the object don't update it
     if (selectedGO != nullptr && !blockUpdate)
     {
-        GameObjectModified(selectedGO);
         selectedGO->transform.angle = uiTransform->spinBox_RotationX->value();
         UpdateScene();
+        GameObjectModified(selectedGO);
     }
 }
 
@@ -130,9 +130,9 @@ void Inspector::on_spinBox_SX_changed()
         return; // If we dont modify the object don't update it
     if (selectedGO != nullptr && !blockUpdate)
     {
-        GameObjectModified(selectedGO);
         selectedGO->transform.scale[0] = uiTransform->spinBox_ScaleX->value();
         UpdateScene();
+        GameObjectModified(selectedGO);
     }
 }
 
@@ -142,9 +142,9 @@ void Inspector::on_spinBox_SY_changed()
         return; // If we dont modify the object don't update it
     if (selectedGO != nullptr && !blockUpdate)
     {
-        GameObjectModified(selectedGO);
         selectedGO->transform.scale[1] = uiTransform->spinBox_ScaleY->value();
         UpdateScene();
+        GameObjectModified(selectedGO);
     }
 }
 
@@ -154,9 +154,9 @@ void Inspector::on_comboBox_Shape_changed(int num)
         return; // If we dont modify the object don't update it
     if (selectedGO != nullptr && !blockUpdate)
     {
-        GameObjectModified(selectedGO);
         selectedGO->sprite.SetTypeIndex(num);
         UpdateScene();
+        GameObjectModified(selectedGO);
     }
 }
 
@@ -166,9 +166,9 @@ void Inspector::on_spinBox_StrokeThickness_changed()
         return; // If we dont modify the object don't update it
     if (selectedGO != nullptr && !blockUpdate)
     {
-        GameObjectModified(selectedGO);
         selectedGO->sprite.strokeThickness = uiMaterial->spinBoxThickness->value();
         UpdateScene();
+        GameObjectModified(selectedGO);
     }
 }
 
@@ -178,9 +178,9 @@ void Inspector::on_comboBox_StrokeStyle_changed(int num)
         return; // If we dont modify the object don't update it
     if (selectedGO != nullptr && !blockUpdate)
     {
-        GameObjectModified(selectedGO);
         selectedGO->sprite.SettrokeTypeIndex(num);
         UpdateScene();
+        GameObjectModified(selectedGO);
     }
 }
 
@@ -188,10 +188,10 @@ void Inspector::on_pushButton_FillColor_changed()
 {
     if (selectedGO != nullptr && !blockUpdate)
     {
-        GameObjectModified(selectedGO);
         QColor color = QColorDialog::getColor(selectedGO->sprite.fillColor, this, "Choose Color");
         selectedGO->sprite.fillColor = color;
         UpdateScene();
+        GameObjectModified(selectedGO);
     }
 }
 
@@ -199,10 +199,10 @@ void Inspector::on_pushButton_StrokeColor_changed()
 {
     if (selectedGO != nullptr && !blockUpdate)
     {
-        GameObjectModified(selectedGO);
         QColor color = QColorDialog::getColor(selectedGO->sprite.strokeColor, this, "Choose Color");
         selectedGO->sprite.strokeColor = color;
         UpdateScene();
+        GameObjectModified(selectedGO);
     }
 }
 
@@ -210,9 +210,9 @@ void Inspector::on_name_changed()
 {
     if (selectedGO != nullptr && !blockUpdate)
     {
-        GameObjectModified(selectedGO);
         selectedGO->name = uiTransform->lineEditName->text();
         GameObjectChangedName(selectedGO->GetId(),selectedGO->name);
         UpdateScene();
+        GameObjectModified(selectedGO);
     }
 }

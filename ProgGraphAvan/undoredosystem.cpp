@@ -76,12 +76,14 @@ void UndoRedoSystem::AddGameObject(GameObject* go)
 
 void UndoRedoSystem::GoBack()
 {
-    if (!lastWasBack)
+    if (!lastWasBack || actualIndex == (BUCKET_SIZE -1))
     {
+        recoveryBucket[actualIndex]->wentBack = true;
         lastWasBack = true;
         if (actualIndex > 0)
             actualIndex--;
     }
+
     if (recoveryBucket[actualIndex]->original_gameObject != nullptr)    // Not have been removed
     {
         recoveryBucket[actualIndex]->original_gameObject->name = recoveryBucket[actualIndex]->copy_gameObject.name;
