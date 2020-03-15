@@ -77,30 +77,28 @@ void UndoRedoSystem::AddGameObject(GameObject* go)
 void UndoRedoSystem::GoBack()
 {
     qDebug("Prev Actual Index: %i", actualIndex);
-    if (actualIndex > 0)
-        actualIndex--;
     qDebug("Post Actual Index: %i", actualIndex);
-    if (recoveryBucket[actualIndex+1]->original_gameObject != nullptr)    // Not have been removed
+    if (recoveryBucket[actualIndex]->original_gameObject != nullptr)    // Not have been removed
     {
-        recoveryBucket[actualIndex+1]->original_gameObject->name = recoveryBucket[actualIndex]->copy_gameObject.name;
-        recoveryBucket[actualIndex+1]->original_gameObject->SetId(recoveryBucket[actualIndex]->copy_gameObject.GetId());
+        recoveryBucket[actualIndex]->original_gameObject->name = recoveryBucket[actualIndex]->copy_gameObject.name;
+        recoveryBucket[actualIndex]->original_gameObject->SetId(recoveryBucket[actualIndex]->copy_gameObject.GetId());
 
-        recoveryBucket[actualIndex+1]->original_gameObject->transform.position[0] =   recoveryBucket[actualIndex]->copy_gameObject.transform.position[0];
-        recoveryBucket[actualIndex+1]->original_gameObject->transform.position[1] =   recoveryBucket[actualIndex]->copy_gameObject.transform.position[1];
-        recoveryBucket[actualIndex+1]->original_gameObject->transform.position[2] =   recoveryBucket[actualIndex]->copy_gameObject.transform.position[2];
-        recoveryBucket[actualIndex+1]->original_gameObject->transform.angle =         recoveryBucket[actualIndex]->copy_gameObject.transform.angle;
-        recoveryBucket[actualIndex+1]->original_gameObject->transform.scale[0] =      recoveryBucket[actualIndex]->copy_gameObject.transform.scale[0];
-        recoveryBucket[actualIndex+1]->original_gameObject->transform.scale[1] =      recoveryBucket[actualIndex]->copy_gameObject.transform.scale[1];
+        recoveryBucket[actualIndex]->original_gameObject->transform.position[0] =   recoveryBucket[actualIndex]->copy_gameObject.transform.position[0];
+        recoveryBucket[actualIndex]->original_gameObject->transform.position[1] =   recoveryBucket[actualIndex]->copy_gameObject.transform.position[1];
+        recoveryBucket[actualIndex]->original_gameObject->transform.position[2] =   recoveryBucket[actualIndex]->copy_gameObject.transform.position[2];
+        recoveryBucket[actualIndex]->original_gameObject->transform.angle =         recoveryBucket[actualIndex]->copy_gameObject.transform.angle;
+        recoveryBucket[actualIndex]->original_gameObject->transform.scale[0] =      recoveryBucket[actualIndex]->copy_gameObject.transform.scale[0];
+        recoveryBucket[actualIndex]->original_gameObject->transform.scale[1] =      recoveryBucket[actualIndex]->copy_gameObject.transform.scale[1];
 
-        recoveryBucket[actualIndex+1]->original_gameObject->sprite.SetTypeIndex(recoveryBucket[actualIndex]->copy_gameObject.sprite.GetTypeIndex());
-        recoveryBucket[actualIndex+1]->original_gameObject->sprite.SettrokeTypeIndex(recoveryBucket[actualIndex]->copy_gameObject.sprite.GetStrokeTypeIndex());
-        recoveryBucket[actualIndex+1]->original_gameObject->sprite.strokeThickness = recoveryBucket[actualIndex]->copy_gameObject.sprite.strokeThickness;
+        recoveryBucket[actualIndex]->original_gameObject->sprite.SetTypeIndex(recoveryBucket[actualIndex]->copy_gameObject.sprite.GetTypeIndex());
+        recoveryBucket[actualIndex]->original_gameObject->sprite.SettrokeTypeIndex(recoveryBucket[actualIndex]->copy_gameObject.sprite.GetStrokeTypeIndex());
+        recoveryBucket[actualIndex]->original_gameObject->sprite.strokeThickness = recoveryBucket[actualIndex]->copy_gameObject.sprite.strokeThickness;
 
         int rgba[4];
         recoveryBucket[actualIndex]->copy_gameObject.sprite.fillColor.getRgb(&rgba[0],&rgba[1],&rgba[2],&rgba[3]);
-        recoveryBucket[actualIndex+1]->original_gameObject->sprite.fillColor.setRgb(rgba[0],rgba[1],rgba[2],rgba[3]);
+        recoveryBucket[actualIndex]->original_gameObject->sprite.fillColor.setRgb(rgba[0],rgba[1],rgba[2],rgba[3]);
         recoveryBucket[actualIndex]->copy_gameObject.sprite.strokeColor.getRgb(&rgba[0],&rgba[1],&rgba[2],&rgba[3]);
-        recoveryBucket[actualIndex+1]->original_gameObject->sprite.strokeColor.setRgb(rgba[0],rgba[1],rgba[2],rgba[3]);
+        recoveryBucket[actualIndex]->original_gameObject->sprite.strokeColor.setRgb(rgba[0],rgba[1],rgba[2],rgba[3]);
     }
     else    // Have been removed
     {
@@ -108,7 +106,10 @@ void UndoRedoSystem::GoBack()
     }
     scene->update();
     if (scene->wInspector != nullptr)
-        scene->wInspector->OnEntityChanged(recoveryBucket[actualIndex+1]->original_gameObject, true);
+        scene->wInspector->OnEntityChanged(recoveryBucket[actualIndex]->original_gameObject, true);
+
+    if (actualIndex > 0)
+        actualIndex--;
 }
 
 void UndoRedoSystem::GoFront()

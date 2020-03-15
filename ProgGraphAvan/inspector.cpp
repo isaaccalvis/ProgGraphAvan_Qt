@@ -77,6 +77,8 @@ void Inspector::OnEntityChanged(GameObject* go, bool blockUpdate)
 
 void Inspector::on_spinBox_PX_changed()
 {
+    if (uiTransform->spinBox_TranslationX->value() == selectedGO->transform.position[0])
+        return; // If we dont modify the object don't update it
     if (selectedGO != nullptr && !blockUpdate)
     {
         GameObjectModified(selectedGO);
@@ -87,6 +89,8 @@ void Inspector::on_spinBox_PX_changed()
 
 void Inspector::on_spinBox_PY_changed()
 {
+    if (uiTransform->spinBox_TranslationY->value() == selectedGO->transform.position[1])
+        return; // If we dont modify the object don't update it
     if (selectedGO != nullptr && !blockUpdate)
     {
         GameObjectModified(selectedGO);
@@ -97,6 +101,8 @@ void Inspector::on_spinBox_PY_changed()
 
 void Inspector::on_spinBox_PZ_changed()
 {
+    if (uiTransform->spinBox_TranslationZ->value() == selectedGO->transform.position[2])
+        return; // If we dont modify the object don't update it
     if (selectedGO != nullptr && !blockUpdate)
     {
         GameObjectModified(selectedGO);
@@ -107,6 +113,8 @@ void Inspector::on_spinBox_PZ_changed()
 
 void Inspector::on_spinBox_Angle_changed()
 {
+    if (uiTransform->spinBox_RotationX->value() == selectedGO->transform.angle)
+        return; // If we dont modify the object don't update it
     if (selectedGO != nullptr && !blockUpdate)
     {
         GameObjectModified(selectedGO);
@@ -117,6 +125,8 @@ void Inspector::on_spinBox_Angle_changed()
 
 void Inspector::on_spinBox_SX_changed()
 {
+    if (uiTransform->spinBox_ScaleX->value() == selectedGO->transform.scale[0])
+        return; // If we dont modify the object don't update it
     if (selectedGO != nullptr && !blockUpdate)
     {
         GameObjectModified(selectedGO);
@@ -127,6 +137,8 @@ void Inspector::on_spinBox_SX_changed()
 
 void Inspector::on_spinBox_SY_changed()
 {
+    if (uiTransform->spinBox_ScaleY->value() == selectedGO->transform.scale[1])
+        return; // If we dont modify the object don't update it
     if (selectedGO != nullptr && !blockUpdate)
     {
         GameObjectModified(selectedGO);
@@ -137,6 +149,8 @@ void Inspector::on_spinBox_SY_changed()
 
 void Inspector::on_comboBox_Shape_changed(int num)
 {
+    if (num == selectedGO->sprite.GetTypeIndex())
+        return; // If we dont modify the object don't update it
     if (selectedGO != nullptr && !blockUpdate)
     {
         GameObjectModified(selectedGO);
@@ -147,6 +161,8 @@ void Inspector::on_comboBox_Shape_changed(int num)
 
 void Inspector::on_spinBox_StrokeThickness_changed()
 {
+    if (uiMaterial->spinBoxThickness->value() == selectedGO->sprite.strokeThickness)
+        return; // If we dont modify the object don't update it
     if (selectedGO != nullptr && !blockUpdate)
     {
         GameObjectModified(selectedGO);
@@ -157,6 +173,8 @@ void Inspector::on_spinBox_StrokeThickness_changed()
 
 void Inspector::on_comboBox_StrokeStyle_changed(int num)
 {
+    if (num == selectedGO->sprite.GetStrokeTypeIndex())
+        return; // If we dont modify the object don't update it
     if (selectedGO != nullptr && !blockUpdate)
     {
         GameObjectModified(selectedGO);
